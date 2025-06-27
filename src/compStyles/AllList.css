@@ -1,0 +1,22 @@
+#Grocerytag,#CoolDrinkstg,#Stationariestag{
+    background-color: rebeccapurple;
+    width: 150px;
+    height: 55px;
+    padding: 5px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin-top: 10px;
+    color: white;
+}
+#Vegetalestag,#Snackstag{
+    background-color: rgb(51, 153, 59);
+    width: 170px;
+    height: 55px;
+    padding: 5px;
+    padding-left: 15px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-top: 10px;
+    margin-left: 89vw;
+    color: white;
+}

@@ -1,0 +1,40 @@
+#divinput{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.grocerInput{
+    
+    width: 500px;
+    height: 60px;
+    border: 7px solid rgba(173, 203, 251, 0.857);
+    border-style:ridge;
+    outline: none;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    font-size: 20px;
+    padding-left: 8px;
+}
+.grocerInput:hover{
+    border-style:groove;
+    border-color: rgb(87, 87, 248);
+}
+
+.searchbtn{
+    outline: none;
+    border: none;
+    color: white;
+    background-color: rgb(59, 59, 251);
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 22px;
+    margin-left: 5px;
+}
+.searchbtn:hover{
+ color: rgb(87, 87, 248);
+ background-color: white;
+ border: 2px solid;
+ border-color: rgb(87, 87, 248);
+ font-weight:500;
+}
