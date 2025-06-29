@@ -8,15 +8,16 @@ import Snacks from './Snacks'
 import Stationaries from './Stationaries'
 import Bucket from './Bucket'
 import Cart from './Cart'
+import ProductInput from './ProductInput'
 import NotFound from './NotFound'
 import '../compStyles/NavigationBar.css'
 import { Archive,ShoppingCart } from 'lucide-react';
 export default function NavigationBar() {
-  const divstyle = { "margin-top":" 20px",
-    "margin-right":" 20px",
+  const divstyle = { "marginTop":" 20px",
+    "marginRight":" 20px",
     width:" 50px",
     height: "50px",
-  "padding-right":"50px"}
+  "paddingRight":"50px"}
   return (
     <div>
         <BrowserRouter>
@@ -103,6 +104,7 @@ export default function NavigationBar() {
             <Route path='/Stationaries' element={<Stationaries/>}/>
             <Route path='/Bucket' element={<Bucket/>}/>
             <Route path='/Cart' element={<Cart/>}/>
+            <Route path='/ProductInput' element={<ProductInput/>}/>
             <Route path='/*' element={<NotFound/>}/>
 
         </Routes>

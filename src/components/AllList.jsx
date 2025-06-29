@@ -20,6 +20,7 @@ export default function AllList() {
         <Card.Text>
           $25.00
         </Card.Text>
+        <h5>$75</h5>
         <Button variant="danger"><Archive />Add to Backet</Button>
         <span  style={{"padding":"10px"}}><Button variant="primary"><ShoppingCart/>Cart</Button></span>
       </Card.Body>
@@ -41,6 +42,7 @@ export default function AllList() {
         <Card.Text>
           $25.00
         </Card.Text>
+        <h5>$75</h5>
         <Button variant="danger"><Archive /> Add to Backet</Button>
         <span  style={{"padding":"10px"}}><Button variant="primary"><ShoppingCart/>Cart</Button></span>
       </Card.Body>
@@ -61,6 +63,7 @@ export default function AllList() {
         <Card.Text>
           $25.00
         </Card.Text>
+        <h5>$75</h5>
         <Button variant="danger"><Archive />Add to Backet</Button>
         <span  style={{"padding":"10px"}}><Button variant="primary"><ShoppingCart/>Cart</Button></span>
       </Card.Body>
@@ -81,6 +84,7 @@ export default function AllList() {
         <Card.Text>
           $25.00
         </Card.Text>
+        <h5>$75</h5>
         <Button variant="danger"><Archive />Add to Backet</Button>
         <span  style={{"padding":"10px"}}><Button variant="primary"><ShoppingCart/>Cart</Button></span>
       </Card.Body>
@@ -101,6 +105,7 @@ export default function AllList() {
         <Card.Text>
           $25.00
         </Card.Text>
+        <h5>$75</h5>
         <Button variant="danger"><Archive />Add to Backet</Button>
         <span  style={{"padding":"10px"}}><Button variant="primary"><ShoppingCart/>Cart</Button></span>
       </Card.Body>
