@@ -1,12 +1,14 @@
-import React from 'react'
-import WelcomeBanner from './WelcomeBanner'
+import React, { useEffect, useState } from "react";
+import {WelcomeBanner} from './WelcomeBanner'
 import AllList from './AllList'
 import Footer from './Footer'
+
 export default function All() {
+  const [AllSearch,setAllSearch] = useState('');
   return (
     <div>
-        <WelcomeBanner/>
-        <AllList/>
+        <WelcomeBanner AllSearch = {AllSearch} setAllSearch={setAllSearch}/>
+        <AllList AllSearch = {AllSearch}/>
         <Footer/>
     </div>
   )

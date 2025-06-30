@@ -38,3 +38,24 @@
  border-color: rgb(87, 87, 248);
  font-weight:500;
 }
+
+
+.clearbtn{
+    outline: none;
+    border: none;
+    color: white;
+    background-color: rgb(202, 1, 4);
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 22px;
+    margin-left: 5px;
+}
+.clearbtn:hover{
+ color: rgb(202, 1, 4);
+ background-color: white;
+ border: 2px solid;
+ border-color: rgb(202, 1, 4);
+ font-weight:500;
+}
+

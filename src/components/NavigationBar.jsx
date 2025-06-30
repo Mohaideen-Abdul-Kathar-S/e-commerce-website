@@ -90,7 +90,7 @@ export default function NavigationBar() {
   </li>
         </ul>
         <div className='navIcons'>
-          <div style={divstyle}><Link to="/Bucket"><Archive size={35}/></Link></div>
+         
           <div style={divstyle}><Link to="/Cart"><ShoppingCart size={35}/></Link></div>
           <div id='profileicon'></div>
         </div>
@@ -102,7 +102,7 @@ export default function NavigationBar() {
             <Route path='/CoolDrinks' element={<CoolDrinks/>}/>
             <Route path='/Snacks' element={<Snacks/>}/>
             <Route path='/Stationaries' element={<Stationaries/>}/>
-            <Route path='/Bucket' element={<Bucket/>}/>
+            
             <Route path='/Cart' element={<Cart/>}/>
             <Route path='/ProductInput' element={<ProductInput/>}/>
             <Route path='/*' element={<NotFound/>}/>

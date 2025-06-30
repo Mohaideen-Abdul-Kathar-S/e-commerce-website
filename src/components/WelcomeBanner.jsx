@@ -4,9 +4,14 @@ import img2 from "../assets/img2.jpeg";
 import img3 from "../assets/img3.jpg";
 import '../compStyles/WelcomeBanner.css'
 import Button from 'react-bootstrap/Button';
-import { Search } from 'lucide-react';
-function WelcomeBanner() {
+export function WelcomeBanner({AllSearch,setAllSearch}) {
   
+  const onChangeHandler = (e)=>{
+    setAllSearch(e.target.value);
+  }
+  const ClearSearch = ()=>{
+    setAllSearch('');
+  }
     let img = [img1,img2,img3];
     const userName = "Kathar"+"..."
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -29,8 +34,9 @@ function WelcomeBanner() {
   </div>
   
   <div className="inputdiv">
-    <input type="text" placeholder="Search..." />
-    <Button id="btn">Search</Button>
+    <input type="text" placeholder="Search..." value={AllSearch} onChange={onChangeHandler}/>
+    <Button id="Searchbtn">Search</Button>
+    <Button id="Clearbtn" onClick={ClearSearch}>Clear</Button>
   </div>
   
 </div>
@@ -38,4 +44,4 @@ function WelcomeBanner() {
   )
 }
 
-export default WelcomeBanner
+// export default WelcomeBanner

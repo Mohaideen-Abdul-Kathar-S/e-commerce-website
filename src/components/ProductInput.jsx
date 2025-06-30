@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 
 export default function ProductInput() {
     const [productsDetails,setProductDetails] = useState({
@@ -21,6 +22,9 @@ export default function ProductInput() {
     const onSubmitHandler = (e)=>{
         e.preventDefault();
         console.log(productsDetails)
+        axios.post("http://localhost:4000/postdata",productsDetails)
+        .then((res)=>console.log(res))
+        .catch((err)=>console.error(err));
     }
     
   return (
