@@ -1,10 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Archive,ShoppingCart } from 'lucide-react';
 import '../compStyles/AllList.css'
 import axios from 'axios';
+import { userContext } from '../App';
+import TextField from '@mui/material/TextField';
+
 export default function AllList({AllSearch}) {
+
+
+  const {userID} = useContext(userContext);
+  const [quantity,setQuantity] = useState(1);
+  const [addtocart,setAddtocart] = useState({
+    _id:''
+  });
+
     const [GroceryData,setGrocey] = useState([]);
     const [VegetablesData,setVegetables] = useState([]);
     const [CoolDrinksData,setCoolDrinks] = useState([]);
@@ -25,6 +36,20 @@ export default function AllList({AllSearch}) {
       }),[AllSearch]
 })
 
+ const addToCart = (data)=>{
+    
+    setAddtocart(data);
+  }
+  const AddDetailsInCart = async (data,quantity)=>{
+    data.quantity = quantity;
+    console.log(data);
+    setAddtocart({_id:''})
+    await axios.put("http://localhost:4000/addToCart",{"data":data,"userID":userID[0]})
+    .then((res)=>console.log(res))
+    .catch((err)=>console.error(err));
+  }
+
+
   return (
     <div>
       
@@ -41,8 +66,8 @@ export default function AllList({AllSearch}) {
           {data.desc}
         </Card.Text>
         <h5>{data.price}</h5>
-        <Button variant="danger"><Archive />Add to Backet</Button>
-        <span  style={{"padding":"10px"}}><Button variant="primary"><ShoppingCart/>Cart</Button></span>
+        <Button variant="danger">Buy Now</Button>
+        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Add to Cart</Button></span>
       </Card.Body>
     </Card>
             ))
@@ -64,7 +89,7 @@ export default function AllList({AllSearch}) {
         </Card.Text>
         <h5>{data.price}</h5>
         <Button variant="danger"><Archive />Add to Backet</Button>
-        <span  style={{"padding":"10px"}}><Button variant="primary"><ShoppingCart/>Cart</Button></span>
+        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Cart</Button></span>
       </Card.Body>
     </Card>
             ))
@@ -85,7 +110,7 @@ export default function AllList({AllSearch}) {
         </Card.Text>
         <h5>{data.price}</h5>
         <Button variant="danger"><Archive />Add to Backet</Button>
-        <span  style={{"padding":"10px"}}><Button variant="primary"><ShoppingCart/>Cart</Button></span>
+        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Cart</Button></span>
       </Card.Body>
     </Card>
             ))
@@ -106,7 +131,7 @@ export default function AllList({AllSearch}) {
         </Card.Text>
         <h5>{data.price}</h5>
         <Button variant="danger"><Archive />Add to Backet</Button>
-        <span  style={{"padding":"10px"}}><Button variant="primary"><ShoppingCart/>Cart</Button></span>
+        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Cart</Button></span>
       </Card.Body>
     </Card>
             ))
@@ -127,13 +152,55 @@ export default function AllList({AllSearch}) {
         </Card.Text>
         <h5>{data.price}</h5>
         <Button variant="danger"><Archive />Add to Backet</Button>
-        <span  style={{"padding":"10px"}}><Button variant="primary"><ShoppingCart/>Cart</Button></span>
+        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Cart</Button></span>
       </Card.Body>
     </Card>
             ))
           
         }
           </div>
+
+
+        {addtocart._id!="" && (
+            <div style={{
+            backgroundColor: "gray",
+            width: "500px",
+            height: "700px",
+            position: "fixed",            
+            top: "50%",                    
+            left: "50%",                 
+            transform: "translate(-50%, -50%)", 
+            zIndex: 1000,
+            color: "white",
+            padding: "20px",
+            borderRadius: "8px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"
+          }}>
+                  <Card key ={addtocart._id} style={{ width: '18rem' }}>
+              <Card.Img variant="top" src={addtocart.image} />
+              <Card.Body>
+                <Card.Title>{addtocart.name}</Card.Title>
+              
+                <Card.Text>
+                  {addtocart.desc}
+                </Card.Text>
+                <h5>{addtocart.price}</h5>
+                
+        
+                
+              </Card.Body>
+            </Card>
+            <TextField variant='outlined' type='number' label="Quantity" id="product-quantity" name='quantity' value={quantity} onChange={(e)=>setQuantity(e.target.value)} required/>
+                  <button onClick={() => setAddtocart({_id:''})}>Close</button>
+                  <button onClick={()=> AddDetailsInCart(addtocart,quantity)}>Add</button>
+                  </div>
+                  )}
+
+
+
     </div>
   )
 }

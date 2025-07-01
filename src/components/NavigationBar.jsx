@@ -6,12 +6,14 @@ import Vegetables from './Vegetables'
 import CoolDrinks from './CoolDrinks'
 import Snacks from './Snacks'
 import Stationaries from './Stationaries'
-import Bucket from './Bucket'
+import BuyNow from './BuyNow'
 import Cart from './Cart'
 import ProductInput from './ProductInput'
 import NotFound from './NotFound'
 import '../compStyles/NavigationBar.css'
 import { Archive,ShoppingCart } from 'lucide-react';
+import TransactionMode from './TransactionMode';
+
 export default function NavigationBar() {
   const divstyle = { "marginTop":" 20px",
     "marginRight":" 20px",
@@ -105,6 +107,8 @@ export default function NavigationBar() {
             
             <Route path='/Cart' element={<Cart/>}/>
             <Route path='/ProductInput' element={<ProductInput/>}/>
+            <Route path='/BuyNow' element={<BuyNow/>}/>
+            <Route path='/TransactionMode' element={<TransactionMode/>}/>
             <Route path='/*' element={<NotFound/>}/>
 
         </Routes>

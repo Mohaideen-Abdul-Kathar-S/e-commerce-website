@@ -3,10 +3,12 @@ import {userContext} from '../App';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import TextField from '@mui/material/TextField'
 
 
 export default function Cart() {
   const {userID} = useContext(userContext);
+  const [addtocart,setAddtocart] = useState({_id:''});
   const [userCartDetails,setUserCartDetails] = useState([]);
   useEffect(()=>{
     axios.get(`http://localhost:4000/getCartDetails/${userID[0]}`)
@@ -21,10 +23,17 @@ export default function Cart() {
     .then((res)=>console.log(res))
     .catch((err)=>console.error(err));
   }
-  const [popup,setpopup] = useState(false);
+ 
 
-  const buyNow = (data)=>{
-    setpopup(!popup);
+  const EditCartProduct = (data)=>{
+    setAddtocart(data);
+  }
+
+  const UpdateDetailsInCart = async (data)=>{
+    setAddtocart({_id:''})
+    await axios.put("http://localhost:4000/addToCart",{"data":data,"userID":userID[0]})
+    .then((res)=>console.log(res))
+    .catch((err)=>console.error(err));
   }
   return (
     <div style={{marginTop:"20px"}}>
@@ -40,12 +49,13 @@ export default function Cart() {
           {data.desc}
         </Card.Text>
         <h5>{data.price}</h5>
+        <h5>{data.quantity}</h5>
         <div className="text-center">
   <Button variant="danger" className="w-auto" onClick={()=>removeFromCart(data._id)}>
      Remove 
   </Button>
-  <Button variant="success" className="w-auto" onClick={()=>buyNow(data)} style={{marginLeft:"40px"}}>
-     Buy Now
+  <Button variant="success" className="w-auto" onClick={()=>EditCartProduct(data)} style={{marginLeft:"40px"}}>
+     Edit
   </Button>
 </div>
 
@@ -56,8 +66,7 @@ export default function Cart() {
           
         }
           </div>
-
-          {popup && (
+{addtocart._id!="" && (
              <div style={{
     backgroundColor: "gray",
     width: "500px",
@@ -75,10 +84,26 @@ export default function Cart() {
     justifyContent: "center",
     alignItems: "center"
   }}>
-          <p>This is a popup</p>
-          <button onClick={() => buyNow({})}>Close</button>
+          <Card key ={addtocart._id} style={{ width: '18rem' }}>
+      <Card.Img variant="top" src={addtocart.image} />
+      <Card.Body>
+        <Card.Title>{addtocart.name}</Card.Title>
+      
+        <Card.Text>
+          {addtocart.desc}
+        </Card.Text>
+        <h5>{addtocart.price}</h5>
+        
+
+        
+      </Card.Body>
+    </Card>
+    <TextField variant='outlined' type='number' label="Quantity" id="product-quantity" name='quantity' value={addtocart.quantity} onChange={(e)=>addtocart.quantity=e.target.value} required/>
+          <button onClick={() => setAddtocart({_id:''})}>Close</button>
+          <button onClick={()=> UpdateDetailsInCart(addtocart)}>Update</button>
           </div>
           )}
+          
     </div>
   )
 }
