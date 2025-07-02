@@ -1,5 +1,6 @@
 import React,{useContext, useEffect, useState} from 'react';
 import {userContext} from '../App';
+import {Link } from 'react-router-dom'
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -103,7 +104,11 @@ export default function Cart() {
           <button onClick={()=> UpdateDetailsInCart(addtocart)}>Update</button>
           </div>
           )}
-          
+    <Link to="/BuyNow" state={{data : userCartDetails}}>  
+<Button variant="danger" className="w-auto" onClick={()=>{}} style={{margin:"auto"}}>
+     Buy Now
+  </Button></Link>
+
     </div>
   )
 }

@@ -1,13 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { useLocation,useNavigate } from 'react-router-dom';
+import {userContext} from '../App';
+import axios from 'axios';
+import Grocery from './Grocery';
+
 
 export default function TransactionMode() {
+  let navigate = useNavigate();
+  let location = useLocation();
+  const {data,loc} = location.state;
+  const {userID} = useContext(userContext);
+
   const [mode, setMode] = useState('');
+  const [orders,setOrders] = useState({});
 
   const handleChange = (event) => {
     setMode(event.target.value);
   };
-
+  const PlaceOrder = async ()=>{
+    orders.product = [data,data];
+    orders.location = loc;
+    orders.mode = mode;
+    orders.userID = userID[0];
+    console.log(orders);
+    await axios.post("http://localhost:4000/postOrderDetails",orders)
+    .then((res)=>{
+      navigate('/Grocery');
+    })
+    .catch((err)=>console.error(err));
+  }
   return (
     <div>
       <FormControl sx={{ width: 200 }}>
@@ -25,9 +47,9 @@ export default function TransactionMode() {
       </FormControl>
       <br />
 
-        {
+        {/* {
             mode=="Cash On Delivery" && <button type='button' style={{backgroundColor:"orange",border:"none",color:"white",margin:"20px",padding:"10px",fontSize:"18px"}}>Order</button>
-        }
+        } */}
         {
             mode=="UPI" && <form >
                 <input type="radio" value={"G-Pay"} name='UPI' /><label>G-Pay</label><br/>
@@ -43,6 +65,8 @@ export default function TransactionMode() {
                 <input type="radio" value={"Indian Bank"} name='Net Banking' /><label>Indian Bank</label>
             </form>
         }
+
+        <button type='button' onClick={PlaceOrder}>Place Order</button>
 
     </div>
   );

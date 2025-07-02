@@ -8,6 +8,7 @@ import Snacks from './Snacks'
 import Stationaries from './Stationaries'
 import BuyNow from './BuyNow'
 import Cart from './Cart'
+import Profile from './Profile'
 import ProductInput from './ProductInput'
 import NotFound from './NotFound'
 import '../compStyles/NavigationBar.css'
@@ -94,7 +95,7 @@ export default function NavigationBar() {
         <div className='navIcons'>
          
           <div style={divstyle}><Link to="/Cart"><ShoppingCart size={35}/></Link></div>
-          <div id='profileicon'></div>
+          <Link to="/Profile"><div id='profileicon'></div></Link>
         </div>
         </nav>
         <Routes>
@@ -104,8 +105,8 @@ export default function NavigationBar() {
             <Route path='/CoolDrinks' element={<CoolDrinks/>}/>
             <Route path='/Snacks' element={<Snacks/>}/>
             <Route path='/Stationaries' element={<Stationaries/>}/>
-            
             <Route path='/Cart' element={<Cart/>}/>
+            <Route path='/Profile' element={<Profile/>}/>
             <Route path='/ProductInput' element={<ProductInput/>}/>
             <Route path='/BuyNow' element={<BuyNow/>}/>
             <Route path='/TransactionMode' element={<TransactionMode/>}/>

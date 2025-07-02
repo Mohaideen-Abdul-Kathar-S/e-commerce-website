@@ -90,7 +90,7 @@ export default function Grocery() {
         </Card.Text>
         <h5>{data.price}</h5>
         <div className="text-center">
-          <Link to="/BuyNow" state={{data}}><Button variant="danger">Buy Now</Button></Link>
+          <Link to="/BuyNow" state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link>
  <span  style={{"padding":"10px"}}> <Button variant="primary" className="w-auto" onClick={()=>addToCart(data)}>
     <ShoppingCart /> Add to Cart
   </Button></span>

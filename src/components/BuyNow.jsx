@@ -39,6 +39,7 @@ export default function BuyNow() {
     const [City,setCity] = useState('');
 
       const [selectedLocation, setSelectedLocation] = useState(null);
+      const [loc,setLoc] = useState({});
 
   const handleLocationSelect = (latlng) => {
     setSelectedLocation(latlng);
@@ -47,15 +48,48 @@ export default function BuyNow() {
   const handleSubmit = async () => {
     if (!selectedLocation) return alert('Please select a location on the map');
     console.log(selectedLocation.lat,selectedLocation.lng,address,City,Pincode);
-   
+    
+      loc.lat=selectedLocation.lat
+      loc.lng=selectedLocation.lng
+      loc.address=address
+      loc.City=City
+      loc.Pincode=Pincode
   };
 
 
   return (
     <div>
         
+        
+         { data.length==1 && <div><Card key ={data[0]._id} style={{ width: '18rem' }}>
+      <Card.Img variant="top" src={data[0].image} />
+      <Card.Body>
+        <Card.Title>{data[0].name}</Card.Title>
+      
+        <Card.Text>
+          {data[0].desc}
+        </Card.Text>
+        <h5>{data[0].price}</h5>
+        <div className="text-center">
+</div>
+
+        
+      </Card.Body>
+    </Card>
             
-                <Card key ={data._id} style={{ width: '18rem' }}>
+          
+       
+                <TextField type='number' placeholder='Quantity' name='quantity' value={quantity} onChange={(e)=>{ setQuantity(e.target.value); data.quantity = e.target.value }} required/>
+            
+                <p>prince (1 item) : {data[0].price}</p>
+                <p>No. of items : {quantity}</p>
+                <p>total amount : {quantity*data[0].price}</p>
+                </div>
+                }
+
+                {
+                  data.length>1 && data.map((data)=>(
+                    <div><Card key ={data._id} style={{ width: '18rem' }}>
       <Card.Img variant="top" src={data.image} />
       <Card.Body>
         <Card.Title>{data.name}</Card.Title>
@@ -65,20 +99,22 @@ export default function BuyNow() {
         </Card.Text>
         <h5>{data.price}</h5>
         <div className="text-center">
-         
-
-
 </div>
 
         
       </Card.Body>
     </Card>
             
-          <TextField type='number' placeholder='Quantity' name='quantity' value={quantity} onChange={(e)=> setQuantity(e.target.value)} required/>
+          
+       
+                {/* <TextField type='number' placeholder='Quantity' name='quantity' value={quantity} onChange={(e)=>{ setQuantity(e.target.value); data.quantity = e.target.value }} required/> */}
             
                 <p>prince (1 item) : {data.price}</p>
-                <p>No. of items : {quantity}</p>
-                <p>total amount : {quantity*data.price}</p>
+                <p>No. of items : {data.quantity}</p>
+                <p>total amount : {data.quantity*data.price}</p>
+                </div>
+                  ))
+                }
 
                 
       <h3>Select Delivery Location</h3>
@@ -93,10 +129,10 @@ export default function BuyNow() {
       <TextField placeholder='Address...' type="text" name='address' value={address} onChange={(e)=>setAddress(e.target.value)} rows={4} multiline required/>
         <TextField placeholder='City' type="text" name='City' value={City} onChange={(e)=>setCity(e.target.value)} required/>
              <TextField placeholder='Pincode' type="text" name='Pincode' value={Pincode} onChange={(e)=>setPincode(e.target.value)} required/>
-      <button onClick={handleSubmit}>Save Location</button>
+ 
     
             
-       <Link to="/TransactionMode" state={{quantity,data}}>  <Button variant="secondary" style={{paddingLeft:"20px",paddingRight:"20px",margin:"10px"}}>Continue</Button></Link>
+       <Link to="/TransactionMode" state={{data,loc}}>  <Button variant="secondary" style={{paddingLeft:"20px",paddingRight:"20px",margin:"10px"}} onClick={handleSubmit}>Continue</Button></Link>
     </div>
   )
 }
