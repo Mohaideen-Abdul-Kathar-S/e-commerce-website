@@ -4,7 +4,7 @@ import NavigationBar from './components/NavigationBar'
 export let userContext = createContext();
 function App() {
 
-  const userID = useState("123");
+  const userID = useState("");
   
 
   return (

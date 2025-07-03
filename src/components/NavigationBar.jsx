@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import {BrowserRouter,Routes,Route,Link,NavLink} from 'react-router-dom'
 import All from './All'
 import Grocery from './Grocery'
@@ -14,8 +14,12 @@ import NotFound from './NotFound'
 import '../compStyles/NavigationBar.css'
 import { Archive,ShoppingCart } from 'lucide-react';
 import TransactionMode from './TransactionMode';
+import {userContext} from '../App';
+import SignInRegister from './SignInRegister';
 
 export default function NavigationBar() {
+  const {userID} = useContext(userContext);
+  console.log(userID);
   const divstyle = { "marginTop":" 20px",
     "marginRight":" 20px",
     width:" 50px",
@@ -91,6 +95,16 @@ export default function NavigationBar() {
       Stationaries
     </NavLink>
   </li>
+   <li>
+     { userID[0]===""  && (<NavLink
+      to="/SignInRegister"
+      className={({ isActive }) =>
+        isActive ? "nav-link active" : "nav-link"
+      }
+    >
+      SignIn/Register
+    </NavLink>)}
+  </li> 
         </ul>
         <div className='navIcons'>
          
@@ -110,6 +124,7 @@ export default function NavigationBar() {
             <Route path='/ProductInput' element={<ProductInput/>}/>
             <Route path='/BuyNow' element={<BuyNow/>}/>
             <Route path='/TransactionMode' element={<TransactionMode/>}/>
+            <Route path='/SignInRegister' element={<SignInRegister/>}/>
             <Route path='/*' element={<NotFound/>}/>
 
         </Routes>
