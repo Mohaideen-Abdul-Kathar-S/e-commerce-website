@@ -44,7 +44,7 @@ export default function AllList({AllSearch}) {
     data.quantity = quantity;
     console.log(data);
     setAddtocart({_id:''})
-    await axios.put("http://localhost:4000/addToCart",{"data":data,"userID":userID[0]})
+    await axios.put("http://localhost:4000/addToCart",{"data":data,"userID":userID})
     .then((res)=>console.log(res))
     .catch((err)=>console.error(err));
   }

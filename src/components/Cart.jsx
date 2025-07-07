@@ -11,14 +11,15 @@ export default function Cart() {
   const {userID} = useContext(userContext);
   const [addtocart,setAddtocart] = useState({_id:''});
   const [userCartDetails,setUserCartDetails] = useState([]);
+  const [navcount,setNavCount]=useState(0);
   useEffect(()=>{
-    axios.get(`http://localhost:4000/getCartDetails/${userID[0]}`)
+    axios.get(`http://localhost:4000/getCartDetails/${userID}`)
     .then((res)=>setUserCartDetails(res.data.userCart))
     .catch((err)=>console.error(err));
   });
 
   const removeFromCart = (id)=>{
-    const uid = userID[0];
+    const uid = userID;
     console.log(uid,id)
     axios.delete('http://localhost:4000/removeFromCart',{data:{"id":id,"userID":uid}})
     .then((res)=>console.log(res))
@@ -32,9 +33,33 @@ export default function Cart() {
 
   const UpdateDetailsInCart = async (data)=>{
     setAddtocart({_id:''})
-    await axios.put("http://localhost:4000/addToCart",{"data":data,"userID":userID[0]})
+    await axios.put("http://localhost:4000/addToCart",{"data":data,"userID":userID})
     .then((res)=>console.log(res))
     .catch((err)=>console.error(err));
+  }
+
+  const checkavailale = async(CartData)=>{
+    setNavCount(0);
+    CartData.map((data)=>{
+      axios.get(`http://localhost:4000/getGroceryByID/${data._id}`)
+      .then((res)=>{
+        console.log(res.data[0].count);
+if(data.quantity>res.data[0].count){
+        alert(`the item ${data.name} is exceeded its limit`);
+        setNavCount(0);
+        
+      }else{
+        
+        setNavCount((prev) => {
+    const updated = prev + 1;
+    console.log("nav" + updated + "....size" + CartData.length);
+    return updated;
+  });
+      }
+      })
+
+      
+    })
   }
   return (
     <div style={{marginTop:"20px"}}>
@@ -104,10 +129,10 @@ export default function Cart() {
           <button onClick={()=> UpdateDetailsInCart(addtocart)}>Update</button>
           </div>
           )}
-    <Link to="/BuyNow" state={{data : userCartDetails}}>  
-<Button variant="danger" className="w-auto" onClick={()=>{}} style={{margin:"auto"}}>
+    {userCartDetails.length>0 && <Link to={navcount===userCartDetails.length?"/BuyNow":"/Cart"} state={{data : userCartDetails}}>  
+<Button variant="danger" className="w-auto" onClick={()=>{checkavailale(userCartDetails)}} style={{margin:"auto"}}>
      Buy Now
-  </Button></Link>
+  </Button></Link>}
 
     </div>
   )

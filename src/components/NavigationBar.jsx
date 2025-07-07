@@ -12,10 +12,15 @@ import Profile from './Profile'
 import ProductInput from './ProductInput'
 import NotFound from './NotFound'
 import '../compStyles/NavigationBar.css'
-import { Archive,ShoppingCart } from 'lucide-react';
+import { Archive,ShoppingCart,User } from 'lucide-react';
 import TransactionMode from './TransactionMode';
 import {userContext} from '../App';
 import SignInRegister from './SignInRegister';
+import Register from './Register';
+import OrderedProductDetails from './OrderedProductDetails';
+import SendOTP from './SendOTP';
+import ViewHistory from './ViewHistory';
+
 
 export default function NavigationBar() {
   const {userID} = useContext(userContext);
@@ -96,20 +101,20 @@ export default function NavigationBar() {
     </NavLink>
   </li>
    <li>
-     { userID[0]===""  && (<NavLink
+     { userID===""  && (<NavLink
       to="/SignInRegister"
       className={({ isActive }) =>
         isActive ? "nav-link active" : "nav-link"
       }
     >
-      SignIn/Register
+      SignIn/Register 
     </NavLink>)}
   </li> 
         </ul>
         <div className='navIcons'>
          
           <div style={divstyle}><Link to="/Cart"><ShoppingCart size={35}/></Link></div>
-          <Link to="/Profile"><div id='profileicon'></div></Link>
+          <Link to="/Profile"><div id='profileicon'><User size={35} /></div></Link>
         </div>
         </nav>
         <Routes>
@@ -125,8 +130,11 @@ export default function NavigationBar() {
             <Route path='/BuyNow' element={<BuyNow/>}/>
             <Route path='/TransactionMode' element={<TransactionMode/>}/>
             <Route path='/SignInRegister' element={<SignInRegister/>}/>
+            <Route path='/Register' element={<Register/>}/>
+            <Route path='/OrderedProductDetails' element={<OrderedProductDetails/>}/>
+            <Route path='/SendOTP' element={<SendOTP/>}/>
+            <Route path='/ViewHistory' element={<ViewHistory/>}/>
             <Route path='/*' element={<NotFound/>}/>
-
         </Routes>
         </BrowserRouter>
     </div>

@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import img1 from "../assets/img1.jpeg";
 import img2 from "../assets/img2.jpeg";
 import img3 from "../assets/img3.jpg";
 import '../compStyles/WelcomeBanner.css'
 import Button from 'react-bootstrap/Button';
+import {userContext} from '../App';
 export function WelcomeBanner({AllSearch,setAllSearch}) {
+  const {UserName} = useContext(userContext);
   
   const onChangeHandler = (e)=>{
     setAllSearch(e.target.value);
@@ -13,7 +15,7 @@ export function WelcomeBanner({AllSearch,setAllSearch}) {
     setAllSearch('');
   }
     let img = [img1,img2,img3];
-    const userName = "Kathar"+"..."
+    const userName = UserName+"..."
     const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {

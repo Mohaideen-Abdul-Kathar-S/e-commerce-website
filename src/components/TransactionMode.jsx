@@ -19,10 +19,10 @@ export default function TransactionMode() {
     setMode(event.target.value);
   };
   const PlaceOrder = async ()=>{
-    orders.product = [data,data];
+    orders.product = data;
     orders.location = loc;
     orders.mode = mode;
-    orders.userID = userID[0];
+    orders.userID = userID;
     console.log(orders);
     await axios.post("http://localhost:4000/postOrderDetails",orders)
     .then((res)=>{

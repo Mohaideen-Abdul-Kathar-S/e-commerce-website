@@ -18,6 +18,7 @@ export default function Grocery() {
     _id:''
   });
   // console.log(userID);
+  const BuyNow = userID?"/BuyNow":"/SignInRegister";
   const onChangeHandler = (e)=>{
     setSearchData(e.target.value);
   }
@@ -59,14 +60,15 @@ export default function Grocery() {
   },[]);
 
   const addToCart = (data)=>{
-    
+    if(userID!=''){
     setAddtocart(data);
+  }
   }
   const AddDetailsInCart = async (data,quantity)=>{
     data.quantity = quantity;
     console.log(data);
     setAddtocart({_id:''})
-    await axios.put("http://localhost:4000/addToCart",{"data":data,"userID":userID[0]})
+    await axios.put("http://localhost:4000/addToCart",{"data":data,"userID":userID})
     .then((res)=>console.log(res))
     .catch((err)=>console.error(err));
   }
@@ -90,7 +92,7 @@ export default function Grocery() {
         </Card.Text>
         <h5>{data.price}</h5>
         <div className="text-center">
-          <Link to="/BuyNow" state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link>
+          {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }}>Out Of Stack</Button>}
  <span  style={{"padding":"10px"}}> <Button variant="primary" className="w-auto" onClick={()=>addToCart(data)}>
     <ShoppingCart /> Add to Cart
   </Button></span>

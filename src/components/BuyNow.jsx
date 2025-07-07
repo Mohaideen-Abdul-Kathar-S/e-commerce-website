@@ -48,12 +48,13 @@ export default function BuyNow() {
   const handleSubmit = async () => {
     if (!selectedLocation) return alert('Please select a location on the map');
     console.log(selectedLocation.lat,selectedLocation.lng,address,City,Pincode);
-    
+      // data[0].quantity=quantity
       loc.lat=selectedLocation.lat
       loc.lng=selectedLocation.lng
       loc.address=address
       loc.City=City
       loc.Pincode=Pincode
+      console.log(data);
   };
 
 
@@ -79,7 +80,7 @@ export default function BuyNow() {
             
           
        
-                <TextField type='number' placeholder='Quantity' name='quantity' value={quantity} onChange={(e)=>{ setQuantity(e.target.value); data.quantity = e.target.value }} required/>
+                <TextField type='number' placeholder='Quantity' name='quantity' value={quantity} onChange={(e)=>{ e.target.value<=data[0].count? setQuantity(e.target.value) : alert("Stock is limit"); data[0].quantity = e.target.value }} required/>
             
                 <p>prince (1 item) : {data[0].price}</p>
                 <p>No. of items : {quantity}</p>
@@ -89,7 +90,7 @@ export default function BuyNow() {
 
                 {
                   data.length>1 && data.map((data)=>(
-                    <div><Card key ={data._id} style={{ width: '18rem' }}>
+                    <div key ={data._id}><Card key ={data._id} style={{ width: '18rem' }}>
       <Card.Img variant="top" src={data.image} />
       <Card.Body>
         <Card.Title>{data.name}</Card.Title>
