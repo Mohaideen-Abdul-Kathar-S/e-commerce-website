@@ -2,8 +2,10 @@ import React, { useEffect, useState,useContext } from 'react'
 import axios from 'axios';
 import { userContext } from '../App';
 import {useNavigate} from 'react-router-dom';
+import {Commet} from 'react-loading-indicators';
 
 export default function ViewHistory() {
+  const [Loading,setLoading]=useState(false);
     const {userID} = useContext(userContext);
     const [orderData,setorderData] = useState([]);
     const navigate = useNavigate();
@@ -11,8 +13,10 @@ export default function ViewHistory() {
     useEffect(()=>{
         axios.get(`http://localhost:4000/getOrderHistory/${userID}`)
         .then((res)=>setorderData(res.data))
-        .catch((err)=>console.error(err));
+        .catch((err)=>console.error(err))
+        .finally(()=>setLoading(true));
     })
+    if(Loading){
   return (
     <div>
         {orderData.length>0 && orderData.map((val,ind)=>(
@@ -38,11 +42,22 @@ export default function ViewHistory() {
                     <p>{val.location.City}</p>
                     <p>{val.location.pincode}</p>
                     <p>Mode of Transaction : {val.mode}</p>
-                    <button onClick={()=>navigate('/Profile')}>Back</button>
+                  
                    
                     </div>
         
                     ))}
+                      <button onClick={()=>navigate('/Profile')}>Back</button>
     </div>
   )
+    }else{
+      return(
+        <div>
+          <center>
+     <Commet color="#07266e" size="medium" text="Loading..." textColor="#5666c2" />
+          </center>
+         
+        </div>
+      )
+    }
 }

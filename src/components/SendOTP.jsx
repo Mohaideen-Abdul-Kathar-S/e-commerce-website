@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import {useLocation} from 'react-router-dom';
 import axios from 'axios';
 
 function SendOTP() {
-  const [email, setEmail] = useState('');
+  const loc = useLocation();
+  const {userID,orderID}= loc.state;
   const [message, setMessage] = useState('');
   const [otp, setOtp] = useState('');
 
   const handleSend = async () => {
     try {
-      const res = await axios.post('http://localhost:4000/send-otp', { email });
+      console.log(userID)
+      const res = await axios.post('http://localhost:4000/send-otp',  { email: userID });
       setMessage(res.data.message);
       setOtp(res.data.otp); // show OTP for testing (remove in production)
     } catch (err) {
@@ -16,8 +19,8 @@ function SendOTP() {
     }
   };
   const [OTP,setOTP] = useState('');
-  const orderID = "686bf575fe0b4e09040d7455";
-  const mail = "mak@gmail.com";
+  
+  
 
   const Delivery = ()=>{
     if(OTP==otp){
@@ -29,13 +32,8 @@ function SendOTP() {
 
   return (
     <div>
-      <h2>Send OTP to Email</h2>
-      <input
-        type="email"
-        placeholder="Enter Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <h2>Send OTP to {userID}</h2>
+      
       <button onClick={handleSend}>Send OTP</button>
       <p>{message}</p>
       {/* <p>OTP: {otp}</p> */}

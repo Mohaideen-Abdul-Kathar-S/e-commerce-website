@@ -2,19 +2,33 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material'
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 export default function Register() {
     const [userEmail,setUserEmail] = useState('');
     const [userName,setUserName] = useState('');
     const [userPassword,setUserPassword] = useState('');
     const [userConformPassword,setUserConformPassword] = useState('');
+    const [error,setError] = useState(false);
     let navigate = useNavigate();
     const SubmitRegister = async ()=>{
         console.log("clicked")
         if(userPassword===userConformPassword){
             await axios.post("http://localhost:4000/userRegister",{userName:userName,userEmail:userEmail,userPassword:userPassword})
             .then((res)=>{
-                console.log(res);
+                Swal.fire({
+                  title: "Successfully Registered",
+                  icon:"success",
+                  showClass: {
+                    popup: `
+                      animate__animated
+                      animate__fadeInUp
+                      animate__faster
+                    `
+                  },
+                  showConfirmButton: false,
+                  timer:1500
+                });
                 setUserEmail('');
                 setUserName('');
                 setUserPassword('');
@@ -23,8 +37,22 @@ export default function Register() {
                 
             })
             .catch((err)=>{
-                console.error(err);
+                Swal.fire({
+                  title: "UserName is already exists",
+                  icon:"error",
+                  showClass: {
+                    popup: `
+                      animate__animated
+                      animate__fadeInUp
+                      animate__faster
+                    `
+                  },
+                  showConfirmButton: false,
+                  timer:1000
+                });
             })
+        }else{
+          setError(true);
         }
     }
   return (
@@ -156,7 +184,11 @@ export default function Register() {
   
               value={userConformPassword} 
               onChange={(e)=>setUserConformPassword(e.target.value)} 
+              
               style={{paddingBottom:"20px"}}
+              error={error}
+              helperText={error  ? "Passwords should be match":""}
+              required
               InputProps={{
                 style:{
                   borderColor:"red",
@@ -168,6 +200,7 @@ export default function Register() {
       color: "white",                // label color
     }
   }}
+
     sx={{
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
@@ -184,8 +217,11 @@ export default function Register() {
       color: 'white',               // placeholder text color
       opacity: 1,
     },
+    '& label.Mui-error': {
+  color: 'red', // red label when error
+}
   }}
-              required/>
+  />
               
               <div style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
                 <button  onClick={()=>navigate('/SignInRegister') } style={{border:"none",color:"white",padding:"5px",width:"80px",height:"40px",borderRadius:"10px",backgroundColor:"greenyellow",margin:"10px",fontWeight:"600"}}>Login</button>

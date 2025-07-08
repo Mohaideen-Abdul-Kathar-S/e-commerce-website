@@ -4,6 +4,7 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import {userContext} from '../App';
 import axios from 'axios';
 import Grocery from './Grocery';
+import Swal from 'sweetalert2';
 
 
 export default function TransactionMode() {
@@ -26,6 +27,14 @@ export default function TransactionMode() {
     console.log(orders);
     await axios.post("http://localhost:4000/postOrderDetails",orders)
     .then((res)=>{
+      Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Your Order has been saved",
+  showConfirmButton: false,
+  timer: 1500
+});
+
       navigate('/Grocery');
     })
     .catch((err)=>console.error(err));

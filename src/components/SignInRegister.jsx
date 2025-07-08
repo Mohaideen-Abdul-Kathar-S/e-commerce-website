@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import axios from 'axios';
 import {userContext} from '../App';
+import Swal from 'sweetalert2'
 
 export default function SignInRegister() {
     const [userEmail,setUserEmail] = useState('');
@@ -12,6 +13,19 @@ export default function SignInRegister() {
     const login = async ()=>{
       await axios.post("http://localhost:4000/userLogin",{"_id":userEmail,"password":userPassword})
       .then((res)=>{
+              Swal.fire({
+  title: "Successfully Logined",
+  icon:"success",
+  showClass: {
+    popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+  },
+  showConfirmButton: false,
+  timer:1500
+});
                 console.log(res);
                 setUserID(userEmail);
                 setUserName(res.data.userName)
@@ -27,7 +41,19 @@ export default function SignInRegister() {
                 navigate('/')
             })
             .catch((err)=>{
-                console.error(err);
+                Swal.fire({
+  title: "Incorect UserName or Password",
+  icon:"error",
+  showClass: {
+    popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+  },
+  showConfirmButton: false,
+  timer:1000
+});
             })
     }
   return (

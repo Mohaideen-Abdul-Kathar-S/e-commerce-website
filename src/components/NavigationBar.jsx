@@ -20,7 +20,8 @@ import Register from './Register';
 import OrderedProductDetails from './OrderedProductDetails';
 import SendOTP from './SendOTP';
 import ViewHistory from './ViewHistory';
-
+import CustomersOrders from './CustomersOrders';
+import Swal from 'sweetalert2';
 
 export default function NavigationBar() {
   const {userID} = useContext(userContext);
@@ -111,11 +112,13 @@ export default function NavigationBar() {
     </NavLink>)}
   </li> 
         </ul>
-        <div className='navIcons'>
+        { userID!=="" &&  <div className='navIcons'>
          
-          <div style={divstyle}><Link to="/Cart"><ShoppingCart size={35}/></Link></div>
+           <div style={divstyle} >
+          <Link to="/Cart"><ShoppingCart size={35} /></Link></div>
           <Link to="/Profile"><div id='profileicon'><User size={35} /></div></Link>
-        </div>
+          </div>}
+          
         </nav>
         <Routes>
             <Route path='/' element={<All/>}/>
@@ -134,6 +137,7 @@ export default function NavigationBar() {
             <Route path='/OrderedProductDetails' element={<OrderedProductDetails/>}/>
             <Route path='/SendOTP' element={<SendOTP/>}/>
             <Route path='/ViewHistory' element={<ViewHistory/>}/>
+            <Route path='/CustomersOrders' element={<CustomersOrders/>}/>
             <Route path='/*' element={<NotFound/>}/>
         </Routes>
         </BrowserRouter>

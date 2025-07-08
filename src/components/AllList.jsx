@@ -6,9 +6,12 @@ import '../compStyles/AllList.css'
 import axios from 'axios';
 import { userContext } from '../App';
 import TextField from '@mui/material/TextField';
+import {Commet} from 'react-loading-indicators';
+import Swal from 'sweetalert2';
+import {Link} from 'react-router-dom'
 
 export default function AllList({AllSearch}) {
-
+  const [Loading,setLoading]=useState(false);
 
   const {userID} = useContext(userContext);
   const [quantity,setQuantity] = useState(1);
@@ -33,21 +36,45 @@ export default function AllList({AllSearch}) {
       })
       .catch((err)=>{
         console.err(err);
-      }),[AllSearch]
+      })
+      .finally(()=>setLoading(true))
+      ,[AllSearch]
 })
 
  const addToCart = (data)=>{
-    
-    setAddtocart(data);
+
+  if(userID!=''){
+      setAddtocart(data);
+    }else{
+      Swal.fire({
+    position: "top-end",
+    icon: "warning",
+    title: "Please login",
+    showConfirmButton: false,
+    timer: 1500
+  });
+    }
+
   }
   const AddDetailsInCart = async (data,quantity)=>{
     data.quantity = quantity;
     console.log(data);
     setAddtocart({_id:''})
     await axios.put("http://localhost:4000/addToCart",{"data":data,"userID":userID})
-    .then((res)=>console.log(res))
+    .then((res)=>{
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Item successfully added into the cart",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    })
     .catch((err)=>console.error(err));
   }
+  const BuyNow = userID?"/BuyNow":"/SignInRegister";
+
+if(Loading){
 
 
   return (
@@ -66,7 +93,15 @@ export default function AllList({AllSearch}) {
           {data.desc}
         </Card.Text>
         <h5>{data.price}</h5>
-        <Button variant="danger">Buy Now</Button>
+        {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }} onClick={()=>{
+          Swal.fire({
+  
+  icon: "warning",
+  title: "Item is out of stack",
+  showConfirmButton: false,
+  timer: 1000
+});
+        }}>Out Of Stack</Button>}
         <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Add to Cart</Button></span>
       </Card.Body>
     </Card>
@@ -88,8 +123,14 @@ export default function AllList({AllSearch}) {
           {data.desc}
         </Card.Text>
         <h5>{data.price}</h5>
-        <Button variant="danger"><Archive />Add to Backet</Button>
-        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Cart</Button></span>
+          {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }} onClick={()=>{Swal.fire({
+  
+  icon: "warning",
+  title: "Item is out of stack",
+  showConfirmButton: false,
+  timer: 1000
+});}}>Out Of Stack</Button>}
+        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Add to Cart</Button></span>
       </Card.Body>
     </Card>
             ))
@@ -109,8 +150,16 @@ export default function AllList({AllSearch}) {
           {data.desc}
         </Card.Text>
         <h5>{data.price}</h5>
-        <Button variant="danger"><Archive />Add to Backet</Button>
-        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Cart</Button></span>
+          {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }} onClick={()=>{
+            Swal.fire({
+  
+  icon: "warning",
+  title: "Item is out of stack",
+  showConfirmButton: false,
+  timer: 1000
+});
+          }}>Out Of Stack</Button>}
+        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Add to Cart</Button></span>
       </Card.Body>
     </Card>
             ))
@@ -130,8 +179,16 @@ export default function AllList({AllSearch}) {
           {data.desc}
         </Card.Text>
         <h5>{data.price}</h5>
-        <Button variant="danger"><Archive />Add to Backet</Button>
-        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Cart</Button></span>
+          {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }} onClick={()=>{
+            Swal.fire({
+  
+  icon: "warning",
+  title: "Item is out of stack",
+  showConfirmButton: false,
+  timer: 1000
+});
+          }}>Out Of Stack</Button>}
+        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Add to Cart</Button></span>
       </Card.Body>
     </Card>
             ))
@@ -151,8 +208,16 @@ export default function AllList({AllSearch}) {
           {data.desc}
         </Card.Text>
         <h5>{data.price}</h5>
-        <Button variant="danger"><Archive />Add to Backet</Button>
-        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Cart</Button></span>
+         {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }} onClick={()=>{
+          Swal.fire({
+  
+  icon: "warning",
+  title: "Item is out of stack",
+  showConfirmButton: false,
+  timer: 1000
+});
+         }}>Out Of Stack</Button>}
+        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Add to Cart</Button></span>
       </Card.Body>
     </Card>
             ))
@@ -203,4 +268,14 @@ export default function AllList({AllSearch}) {
 
     </div>
   )
+}else{
+  return(
+    <div>
+      <center>
+ <Commet color="#07266e" size="medium" text="Loading..." textColor="#5666c2" />
+      </center>
+     
+    </div>
+  )
+}
 }

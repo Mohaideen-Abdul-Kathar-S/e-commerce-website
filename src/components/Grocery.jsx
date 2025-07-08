@@ -8,8 +8,11 @@ import axios from 'axios';
 import {userContext} from '../App';
 import TextField from '@mui/material/TextField';
 import {Link} from 'react-router-dom';
+import {Commet} from 'react-loading-indicators';
+import Swal from 'sweetalert2'
 
 export default function Grocery() {
+  const [Loading,setLoading]=useState(false);
   const [searchData,setSearchData] = useState('');
   const [product,setProduct] = useState([]);
   const {userID} = useContext(userContext);
@@ -57,11 +60,20 @@ export default function Grocery() {
 
       console.log(Err);
     })
+    .finally(()=>setLoading(true))
   },[]);
 
   const addToCart = (data)=>{
     if(userID!=''){
     setAddtocart(data);
+  }else{
+    Swal.fire({
+  position: "top-end",
+  icon: "warning",
+  title: "Please login",
+  showConfirmButton: false,
+  timer: 1500
+});
   }
   }
   const AddDetailsInCart = async (data,quantity)=>{
@@ -69,9 +81,19 @@ export default function Grocery() {
     console.log(data);
     setAddtocart({_id:''})
     await axios.put("http://localhost:4000/addToCart",{"data":data,"userID":userID})
-    .then((res)=>console.log(res))
-    .catch((err)=>console.error(err));
+    .then((res)=>{
+      Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Item successfully added into the cart",
+  showConfirmButton: false,
+  timer: 1500
+});
+    })
+    .catch((err)=>console.error(err))
+    
   }
+  if(Loading){
   return (
     <div>
       <div id='divinput'>
@@ -92,7 +114,15 @@ export default function Grocery() {
         </Card.Text>
         <h5>{data.price}</h5>
         <div className="text-center">
-          {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }}>Out Of Stack</Button>}
+          {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }} onClick={()=>{
+            Swal.fire({
+              
+              icon: "warning",
+              title: "Item is out of stack",
+              showConfirmButton: false,
+              timer: 1000
+            });
+          }}>Out Of Stack</Button>}
  <span  style={{"padding":"10px"}}> <Button variant="primary" className="w-auto" onClick={()=>addToCart(data)}>
     <ShoppingCart /> Add to Cart
   </Button></span>
@@ -145,4 +175,14 @@ export default function Grocery() {
           )}
     </div>
   )
+  }else{
+    return(
+      <div>
+        <center>
+   <Commet color="#07266e" size="medium" text="Loading..." textColor="#5666c2" />
+        </center>
+       
+      </div>
+    )
+  }
 }

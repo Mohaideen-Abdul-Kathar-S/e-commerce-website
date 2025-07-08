@@ -5,7 +5,7 @@ import { ChevronRight, X } from 'lucide-react';
 import { userContext } from '../App';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Swal from 'sweetalert2'
 
 
 export default function Profile() {
@@ -42,8 +42,36 @@ export default function Profile() {
   }
   const SaveDetails = async()=>{
     await axios.put("http://localhost:4000/updateUserDetails",{name,gender,nameofhouse,city,addr,userID})
-    .then((res)=>console.log(res))
-    .catch((err)=>console.error(err));
+    .then((res)=>{
+      Swal.fire({
+        title: "Details Saved",
+        icon:"success",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        showConfirmButton: false,
+        timer:1500
+      });
+    })
+    .catch((err)=>{
+      Swal.fire({
+        title: "Details isn't Saved",
+        icon:"error",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        showConfirmButton: false,
+        timer:1500
+      });
+    });
     setUserName(name);
     setUserGender(gender);
     setUserNOH(nameofhouse);
@@ -60,14 +88,37 @@ export default function Profile() {
   },[])
 
   const cancelOrder = (id)=>{
+
+    Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, delete it!"
+}).then((result)=>{
+  if(result.isConfirmed){
+
     axios.delete(`http://localhost:4000/deleteOrder/${id}`)
     .then((res)=>{console.log(res);
+
+      Swal.fire({
+        position: "top-end",
+      title: "Deleted!",
+      text: "Your item removed from cart",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 1500
+    });
+
       axios.get(`http://localhost:4000/getOrderDetails/${userID}`)
     .then((res)=>{setOrderData(res.data)})
     .catch((err)=>console.error(err));
     })
     .catch((err)=>console.error(err));
   }
+})}
 
   const OrderDetails = (val)=>{
       navigate('/OrderedProductDetails',{state:{val}});
@@ -78,7 +129,19 @@ export default function Profile() {
   }
   return (
     <div>
-      <button className='logoutbtn' onClick={()=>{setUserID('')}}>Logout</button>
+      <button className='logoutbtn' onClick={()=>{Swal.fire({
+        title: "Logouted",
+        icon:"success",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        showConfirmButton: false,
+        timer:1000
+      }); setUserID('');navigate('/SignInRegister')}}>Logout</button>
       <div className='imgCont'>
       <img src={img} alt="profile picture" className='profilePic'/>
       <h2>{UserName}</h2>
