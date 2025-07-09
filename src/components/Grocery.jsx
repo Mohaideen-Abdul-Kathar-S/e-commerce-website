@@ -112,7 +112,7 @@ export default function Grocery() {
         <Card.Text>
           {data.desc}
         </Card.Text>
-        <h5>{data.price}</h5>
+        <h5> Price : Rs.{data.price}</h5>
         <div className="text-center">
           {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }} onClick={()=>{
             Swal.fire({
@@ -162,7 +162,7 @@ export default function Grocery() {
         <Card.Text>
           {addtocart.desc}
         </Card.Text>
-        <h5>{addtocart.price}</h5>
+        <h5>Price : Rs.{addtocart.price}</h5>
         
 
         

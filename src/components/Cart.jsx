@@ -135,8 +135,8 @@ if(data.quantity>res.data[0].count){
         <Card.Text>
           {data.desc}
         </Card.Text>
-        <h5>{data.price}</h5>
-        <h5>{data.quantity}</h5>
+        <h5>Price: Rs.{data.price}</h5>
+        <h5>Quantity : {data.quantity}</h5>
         <div className="text-center">
   <Button variant="danger" className="w-auto" onClick={()=>removeFromCart(data._id)}>
      Remove 
@@ -179,7 +179,7 @@ if(data.quantity>res.data[0].count){
         <Card.Text>
           {addtocart.desc}
         </Card.Text>
-        <h5>{addtocart.price}</h5>
+        <h5>Price : Rs.{addtocart.price}</h5>
         
 
         

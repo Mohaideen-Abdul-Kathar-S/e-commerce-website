@@ -22,6 +22,8 @@ import SendOTP from './SendOTP';
 import ViewHistory from './ViewHistory';
 import CustomersOrders from './CustomersOrders';
 import Swal from 'sweetalert2';
+import GorgotPassord from './GorgotPassord';
+import ChangePass from './ChangePass'
 
 export default function NavigationBar() {
   const {userID} = useContext(userContext);
@@ -138,6 +140,8 @@ export default function NavigationBar() {
             <Route path='/SendOTP' element={<SendOTP/>}/>
             <Route path='/ViewHistory' element={<ViewHistory/>}/>
             <Route path='/CustomersOrders' element={<CustomersOrders/>}/>
+            <Route path='/GorgotPassord' element={<GorgotPassord/>}/>
+            <Route path='/ChangePass' element={<ChangePass/>}/>
             <Route path='/*' element={<NotFound/>}/>
         </Routes>
         </BrowserRouter>

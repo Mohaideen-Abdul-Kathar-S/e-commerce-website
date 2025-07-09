@@ -165,6 +165,8 @@ export default function Profile() {
             <label>Address : </label>
             {isEdit && (<label>{UserAddr}</label>) || (<input value={addr} onChange={onChangeAddr}/>)}<br />
             <button style={{margin:"20px",border:"none",padding:"10px",borderRadius:"10px",fontSize:"18px",backgroundColor:"yellow",color:"gray"}} onClick={()=>{isEdit?ChangeIsEdit():SaveDetails()}}>{isEdit && "Edit Details" || "Save Details"}</button>
+            <button style={{margin:"20px",border:"none",padding:"10px",borderRadius:"10px",fontSize:"18px",backgroundColor:"red",color:"white"}} onClick={()=>navigate('/ChangePass')}>Change Password</button>
+          
           </div>
           }
         { viewOrderDetails==false &&  <div className='Details' onClick={()=>setViewOrderDetails(true)}>

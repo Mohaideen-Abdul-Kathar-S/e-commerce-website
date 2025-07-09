@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField } from '@mui/material';
+import { TextField, Typography  } from '@mui/material';
 import axios from 'axios';
 import {userContext} from '../App';
 import Swal from 'sweetalert2'
+import '../compStyles/SignInRegister.css';
 
 export default function SignInRegister() {
     const [userEmail,setUserEmail] = useState('');
@@ -138,6 +139,7 @@ export default function SignInRegister() {
     },
   }}
               required/>
+              <p className='gorgotpass' onClick={()=>{navigate('/GorgotPassord')}}>Forgot Password?</p>
               <div style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
               <button onClick={()=>navigate('/Register')} style={{border:"none",color:"white",padding:"5px",width:"80px",height:"40px",borderRadius:"10px",backgroundColor:"blue",margin:"10px",fontWeight:"600"}}>Register</button>
               <button onClick={login} style={{border:"none",color:"white",padding:"5px",width:"80px",height:"40px",borderRadius:"10px",backgroundColor:"greenyellow",margin:"10px",fontWeight:"600"}}>Login</button>
