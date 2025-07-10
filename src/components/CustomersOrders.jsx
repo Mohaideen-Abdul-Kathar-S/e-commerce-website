@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate,useLocation} from 'react-router-dom'
 import axios from 'axios';
 
 export default function CustomersOrders() {
     const navigate = useNavigate();
+    const loc = useLocation();
+    const {isLogin} = loc.state || false ;
     const [orderData,setOrderData] = useState([]);
     useEffect(()=>{
         axios.get("http://localhost:4000/getCustomersOrders")
@@ -12,9 +14,11 @@ export default function CustomersOrders() {
         })
         .catch((err)=>console.log(err));
     },[])
-
+if(isLogin){
   return (
     <div>
+      <button onClick={()=>navigate('/Admin')}>Back</button>
+      <button onClick={()=>navigate('/ProductInput',{state:{isLogin:isLogin}})}>Product Details</button>
         {orderData.length>0 && orderData.map((val,ind)=>(
                     <div style={{border:"5px ridge black",margin:"5px",padding:"5px"}}>
                         <h4>userID : {val.userID}</h4>
@@ -51,5 +55,11 @@ export default function CustomersOrders() {
         
                     ))}
     </div>
-  )
+  );}else{
+    return (
+      <div>
+        <h2>Please Login</h2>
+      </div>
+    )
+  }
 }

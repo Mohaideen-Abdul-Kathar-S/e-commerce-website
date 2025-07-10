@@ -24,6 +24,7 @@ import CustomersOrders from './CustomersOrders';
 import Swal from 'sweetalert2';
 import GorgotPassord from './GorgotPassord';
 import ChangePass from './ChangePass'
+import Admin from './Admin'
 
 export default function NavigationBar() {
   const {userID} = useContext(userContext);
@@ -142,6 +143,7 @@ export default function NavigationBar() {
             <Route path='/CustomersOrders' element={<CustomersOrders/>}/>
             <Route path='/GorgotPassord' element={<GorgotPassord/>}/>
             <Route path='/ChangePass' element={<ChangePass/>}/>
+            <Route path='/Admin' element={<Admin/>}/>
             <Route path='/*' element={<NotFound/>}/>
         </Routes>
         </BrowserRouter>

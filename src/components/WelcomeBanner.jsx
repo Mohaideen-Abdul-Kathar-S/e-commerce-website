@@ -15,7 +15,7 @@ export function WelcomeBanner({AllSearch,setAllSearch}) {
     setAllSearch('');
   }
     let img = [img1,img2,img3];
-    const userName = UserName+"..."
+    const userName = UserName;
     const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
