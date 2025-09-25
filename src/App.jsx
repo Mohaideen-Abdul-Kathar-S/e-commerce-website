@@ -8,6 +8,9 @@ import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom'
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import FloatingSearchBall from "./components/FloatingSearchBall";
+import RecommendWidget from "./components/RecommendWidget";
+
 export let userContext = createContext();
 function App() {
 
@@ -39,31 +42,186 @@ function App() {
 
   }
 
-    const createCard = (Data)=>{
-    return <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" ,"paddingLeft":"15px"}}> {Data.map((data)=>(
-                <Card key ={data._id} style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={data.image} />
-      <Card.Body>
-        <Card.Title>{data.name}</Card.Title>
-        <Card.Text>
-          {data.desc}
-        </Card.Text>
-        <h5>{data.price}</h5>
-        {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }} onClick={()=>{
-          Swal.fire({
-  
-  icon: "warning",
-  title: "Item is out of stack",
-  showConfirmButton: false,
-  timer: 1000
-});
-        }}>Out Of Stack</Button>}
-        <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Add to Cart</Button></span>
-      </Card.Body>
-    </Card>
-            ))}
+
+
+const createCard = (Data) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: "20px",
+        flexWrap: "wrap",
+        paddingLeft: "15px",
+        justifyContent: "center",
+      }}
+    >
+      {Data.map((data) => (
+        <div
+          key={data._id}
+          style={{
+            width: "280px",
+            background: "#fff",
+            borderRadius: "12px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
+            transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          }}
+          className="custom-card"
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.25)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0 4px 10px rgba(0,0,0,0.15)";
+          }}
+        >
+          {/* Card Image */}
+          <div
+            style={{
+              width: "100%",
+              height: "200px",
+              overflow: "hidden",
+            }}
+          >
+            <img
+              src={data.image}
+              alt={data.name}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          </div>
+
+          {/* Card Body */}
+          <div style={{ paddingLeft: "15px",paddingRight: "15px",paddingBottom: "15px", flex: "1" }}>
+            <h3
+              style={{
+                fontSize: "18px",
+                fontWeight: "600",
+                marginBottom: "8px",
+              }}
+            >
+              {data.name}
+            </h3>
+            <p style={{ fontSize: "14px", color: "#555", minHeight: "50px" }}>
+              {data.desc}
+            </p>
+            <h4 style={{ color: "#e63946", margin: "10px 0" }}>
+              ₹ {data.price}
+            </h4>
+
+            {/* Buttons */}
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              {data.count > 0 ? (
+                <Link to={BuyNow} state={{ data: [data] }}>
+                  <button
+                    style={{
+                      background: "#e63946",
+                      color: "#fff",
+                      border: "none",
+                      padding: "8px 14px",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      transition: "background 0.3s ease",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background = "#b91c1c")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.background = "#e63946")
+                    }
+                  >
+                    Buy Now
+                  </button>
+                </Link>
+              ) : (
+                <button
+                  style={{
+                    background: "#ccc",
+                    color: "#fff",
+                    border: "none",
+                    padding: "8px 14px",
+                    borderRadius: "6px",
+                    cursor: "not-allowed",
+                    fontSize: "12px",
+                  }}
+                  onClick={() => {
+                    Swal.fire({
+                      icon: "warning",
+                      title: "Item is out of stock",
+                      showConfirmButton: false,
+                      timer: 1000,
+                    });
+                  }}
+                >
+                  Out of Stock
+                </button>
+              )}
+
+              <button
+                style={{
+                  background: "#2563eb",
+                  color: "#fff",
+                  border: "none",
+                  padding: "8px 14px",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  fontSize: "14px",
+                  transition: "background 0.3s ease",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = "#1e40af")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = "#2563eb")
+                }
+                onClick={() => addToCart(data)}
+              >
+                <ShoppingCart size={16} /> Add to Cart
+              </button>
             </div>
-  }
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+
+//     const createCard = (Data)=>{
+//     return <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" ,"paddingLeft":"15px"}}> {Data.map((data)=>(
+//                 <Card key ={data._id} style={{ width: '18rem' }}>
+//       <Card.Img variant="top" src={data.image} />
+//       <Card.Body>
+//         <Card.Title>{data.name}</Card.Title>
+//         <Card.Text>
+//           {data.desc}
+//         </Card.Text>
+//         <h5>{data.price}</h5>
+//         {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }} onClick={()=>{
+//           Swal.fire({
+  
+//   icon: "warning",
+//   title: "Item is out of stack",
+//   showConfirmButton: false,
+//   timer: 1000
+// });
+//         }}>Out Of Stack</Button>}
+//         <span  style={{"padding":"10px"}}><Button variant="primary" onClick={()=>addToCart(data)}><ShoppingCart/>Add to Cart</Button></span>
+//       </Card.Body>
+//     </Card>
+//             ))}
+//             </div>
+//   }
   
     const AddDetailsInCart = async (data,quantity)=>{
     data.quantity = quantity;
@@ -85,6 +243,8 @@ function App() {
   return (
     <userContext.Provider value={{UserAddr,setUserAddr,UserCity,setUserCity,setUserNOH,UserNOH,setUserGender,UserGender,userID,setUserID,UserName,setUserName,createCard}}>
     <NavigationBar/>
+    <RecommendWidget/>
+    <FloatingSearchBall/>
 
     {addtocart._id!="" && (
             <div style={{

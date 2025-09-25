@@ -1,65 +1,175 @@
-import React, { useEffect, useState } from 'react'
-import {useNavigate,useLocation} from 'react-router-dom'
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Box,
+  Grid,
+  Divider,
+} from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
 export default function CustomersOrders() {
-    const navigate = useNavigate();
-    const loc = useLocation();
-    const {isLogin} = loc.state || false ;
-    const [orderData,setOrderData] = useState([]);
-    useEffect(()=>{
-        axios.get("http://localhost:4000/getCustomersOrders")
-        .then((res)=>{
-            setOrderData(res.data);
-        })
-        .catch((err)=>console.log(err));
-    },[])
-if(isLogin){
-  return (
-    <div>
-      <button onClick={()=>navigate('/Admin')}>Back</button>
-      <button onClick={()=>navigate('/ProductInput',{state:{isLogin:isLogin}})}>Product Details</button>
-        {orderData.length>0 && orderData.map((val,ind)=>(
-                    <div style={{border:"5px ridge black",margin:"5px",padding:"5px"}}>
-                        <h4>userID : {val.userID}</h4>
-                        <p>Delivery Address</p>
-                    <p>Address : {val.location.address}</p>
-                    <p>City : {val.location.City}</p>
-                    <p>PinCode : {val.location.Pincode}</p>
-                    <p>Mode of Transaction : {val.mode}</p>
-                      {val.product.map((data,indx)=>(
-                      <div key={`${ind}-${indx}`} className='smallCard'>
-                       
-                      <div className='smallCardImg'>
-                        <img src={data.image} alt="imgs" style={{width:"17rem",height:"9rem"}}/>
-                      </div>
-                      <div className='smallCardData'>
-                        <h2>{data.name}</h2>
-                        <p>{data.quantity}</p>
-                        <p>{data.price}</p>
-                        <p >Date</p>
-                        
-                        
-                      </div>
-                      
-                    </div>
-                    
-                    ))}
-                    <div style={{display:'flex',flexDirection:"row"}}>
-               <button style={{flex:"1",border:"none",padding:"10px",fontSize:"18px",backgroundColor:"Blue",color:"white"}} onClick={()=>navigate('/SendOTP',{state:{userID : val.userID,orderID:val._id}})} >Delivery</button>
-           
-            </div>
-                    
-                   
-                    </div>
-        
-                    ))}
-    </div>
-  );}else{
+  const navigate = useNavigate();
+  const loc = useLocation();
+  const { isLogin } = loc.state || false;
+  const [orderData, setOrderData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getCustomersOrders")
+      .then((res) => {
+        setOrderData(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  if (!isLogin) {
     return (
-      <div>
-        <h2>Please Login</h2>
-      </div>
-    )
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h6" color="error">
+          Please Login
+        </Typography>
+      </Box>
+    );
   }
+
+  return (
+    <Box sx={{ p: 3, bgcolor: "#f9f9f9", minHeight: "100vh" }}>
+      {/* Navigation Buttons */}
+      <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
+        <Button variant="outlined" onClick={() => navigate("/Admin")}>
+          Back
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => navigate("/ProductInput", { state: { isLogin } })}
+        >
+          Product Details
+        </Button>
+      </Box>
+
+      {/* Orders */}
+      {orderData.length > 0 ? (
+        orderData.map((val, ind) => (
+          <Card
+            key={ind}
+            sx={{
+              mb: 3,
+              borderRadius: 3,
+              boxShadow: 4,
+              overflow: "hidden",
+            }}
+          >
+            <CardContent>
+              <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+                Order by UserID: {val.userID}
+              </Typography>
+
+              <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                Delivery Address
+              </Typography>
+              <Typography variant="body2">
+                {val.location.address}, {val.location.City} -{" "}
+                {val.location.Pincode}
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 2 }}>
+                Mode of Transaction: <b>{val.mode}</b>
+              </Typography>
+
+              <Divider sx={{ mb: 2 }} />
+
+              {/* Products in Order */}
+              <Grid container spacing={2}>
+                {val.product.map((data, indx) => (
+                  <Grid item xs={12} sm={6} md={4} key={`${ind}-${indx}`}>
+                    <Card
+                      sx={{
+                        borderRadius: 2,
+                        boxShadow: 2,
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          height: 150,
+                          overflow: "hidden",
+                          borderBottom: "1px solid #eee",
+                        }}
+                      >
+                        <img
+                          src={data.image}
+                          alt={data.name}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </Box>
+                      <CardContent>
+                        <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                          {data.name}
+                        </Typography>
+                        <Typography variant="body2">
+                          Quantity: {data.quantity}
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: "green" }}>
+                          ₹ {data.price}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          sx={{ display: "block", mt: 1, color: "gray" }}
+                        >
+                          Date: {new Date().toLocaleDateString()}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+
+              {/* Delivery Button */}
+              <Box sx={{ mt: 3, textAlign: "center" }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  sx={{
+                    borderRadius: 2,
+                    px: 5,
+                    fontWeight: "bold",
+                    textTransform: "none",
+                  }}
+                  onClick={() =>
+                    navigate("/SendOTP", {
+                      state: { userID: val.userID, orderID: val._id },
+                    })
+                  }
+                >
+                  Mark as Delivery
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
+        ))
+      ) : (
+        <Typography variant="body1" sx={{ textAlign: "center", mt: 5 }}>
+          No orders available
+        </Typography>
+      )}
+    </Box>
+  );
 }

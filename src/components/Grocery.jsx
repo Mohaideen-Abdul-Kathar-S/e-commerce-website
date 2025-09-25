@@ -15,7 +15,7 @@ export default function Grocery() {
   const [Loading,setLoading]=useState(false);
   const [searchData,setSearchData] = useState('');
   const [product,setProduct] = useState([]);
-  const {userID} = useContext(userContext);
+   const {userID,createCard} = useContext(userContext);
   const [quantity,setQuantity] = useState(1);
   const [addtocart,setAddtocart] = useState({
     _id:''
@@ -101,41 +101,7 @@ export default function Grocery() {
         <button className='searchbtn' onClick={onClickHandler}>Search</button>
         <button className='clearbtn' onClick={onClearHandler}>Clear</button>
       </div>
-      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap","paddingLeft":"15px" }}>
-        {
-            product.map((data)=>(
-                <Card key ={data._id} style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={data.image} />
-      <Card.Body>
-        <Card.Title>{data.name}</Card.Title>
-      
-        <Card.Text>
-          {data.desc}
-        </Card.Text>
-        <h5> Price : Rs.{data.price}</h5>
-        <div className="text-center">
-          {data.count>0 && <Link to={BuyNow} state={{data : [data]}}><Button variant="danger">Buy Now</Button></Link> || <Button variant="danger" style={{ fontSize: "12px" }} onClick={()=>{
-            Swal.fire({
-              
-              icon: "warning",
-              title: "Item is out of stack",
-              showConfirmButton: false,
-              timer: 1000
-            });
-          }}>Out Of Stack</Button>}
- <span  style={{"padding":"10px"}}> <Button variant="primary" className="w-auto" onClick={()=>addToCart(data)}>
-    <ShoppingCart /> Add to Cart
-  </Button></span>
-
-</div>
-
-        
-      </Card.Body>
-    </Card>
-            ))
-          
-        }
-          </div>
+      {createCard(product)}
           {addtocart._id!="" && (
              <div style={{
     backgroundColor: "gray",

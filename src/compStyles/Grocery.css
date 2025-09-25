@@ -59,3 +59,21 @@
  font-weight:500;
 }
 
+@media (max-width: 786px) {
+    #divinput{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .grocerInput{
+        width: 90%;
+        height: 50px;
+        font-size: 18px;
+
+    }
+    .searchbtn, .clearbtn{
+        width: 80px;
+        height: 40px;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+}

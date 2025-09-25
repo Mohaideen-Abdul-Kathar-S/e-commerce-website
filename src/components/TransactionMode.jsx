@@ -1,5 +1,16 @@
 import React, { useState,useContext } from 'react';
-import { MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Button,
+  Grid,
+  Paper,
+} from "@mui/material";
 import { useLocation,useNavigate } from 'react-router-dom';
 import {userContext} from '../App';
 import axios from 'axios';
@@ -40,43 +51,78 @@ export default function TransactionMode() {
     .catch((err)=>console.error(err));
   }
   return (
-    <div>
-      <FormControl sx={{ width: 200 }}>
-        <InputLabel id="mode-label">Select Payment Mode</InputLabel>
-        <Select
-          labelId="mode-label"
-          value={mode}
-          label="Select Payment Mode"
-          onChange={handleChange}
+    <div style={{ padding: "20px" }}>
+  <Paper sx={{ padding: 3, maxWidth: 500, margin: "auto",minHeight: "80vh", overflowY: "auto" }}>
+    <Grid container spacing={3}>
+      {/* Payment Mode Dropdown */}
+      <Grid item xs={12}>
+  <FormControl
+    fullWidth
+    sx={{
+      minWidth: "100%",
+      '@media (max-width:600px)': {
+        fontSize: "14px"
+      }
+    }}
+  >
+    <InputLabel id="mode-label">Select Payment Mode</InputLabel>
+  <Select
+  native
+  value={mode}
+  onChange={handleChange}
+  fullWidth
+>
+  <option value="">Select Payment Mode</option>
+  <option value="UPI">UPI</option>
+  <option value="Net Banking">Net Banking</option>
+  <option value="Cash On Delivery">Cash On Delivery</option>
+</Select>
+
+  </FormControl>
+</Grid>
+
+
+      {/* UPI Options */}
+      {mode === "UPI" && (
+        <Grid item xs={12}>
+          <FormControl component="fieldset" fullWidth>
+            <RadioGroup name="UPI" row={false}>
+              <FormControlLabel value="G-Pay" control={<Radio />} label="G-Pay" />
+              <FormControlLabel value="PayTM" control={<Radio />} label="PayTM" />
+              <FormControlLabel value="some" control={<Radio />} label="some" />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+      )}
+
+      {/* Net Banking Options */}
+      {mode === "Net Banking" && (
+        <Grid item xs={12}>
+          <FormControl component="fieldset" fullWidth>
+            <RadioGroup name="NetBanking" row={false}>
+              <FormControlLabel value="KVB" control={<Radio />} label="KVB" />
+              <FormControlLabel value="ICICI Bank" control={<Radio />} label="ICICI Bank" />
+              <FormControlLabel value="SBI Bank" control={<Radio />} label="SBI Bank" />
+              <FormControlLabel value="Indian Bank" control={<Radio />} label="Indian Bank" />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+      )}
+
+      {/* Place Order Button */}
+      <Grid item xs={12}>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={PlaceOrder}
+          sx={{ padding: "10px", fontSize: "16px" }}
         >
-          <MenuItem value={"UPI"}>UPI</MenuItem>
-          <MenuItem value={"Net Banking"}>Net Banking</MenuItem>
-          <MenuItem value={"Cash On Delivery"}>Cash On Delivery</MenuItem>
-        </Select>
-      </FormControl>
-      <br />
-
-        {/* {
-            mode=="Cash On Delivery" && <button type='button' style={{backgroundColor:"orange",border:"none",color:"white",margin:"20px",padding:"10px",fontSize:"18px"}}>Order</button>
-        } */}
-        {
-            mode=="UPI" && <form >
-                <input type="radio" value={"G-Pay"} name='UPI' /><label>G-Pay</label><br/>
-                <input type="radio" value={"PayTM"} name='UPI' /><label>PayTM</label><br/>
-                <input type="radio" value={"some"} name='UPI' /><label>some</label>
-            </form>
-        }
-        {
-            mode=="Net Banking" && <form >
-                <input type="radio" value={"KVB"} name='Net Banking' /><label>KVB</label><br/>
-                <input type="radio" value={"ICICI Bank"} name='Net Banking' /><label>ICICI Bank</label><br/>
-                <input type="radio" value={"SBI Bank"} name='Net Banking' /><label>SBI Bank</label><br/>
-                <input type="radio" value={"Indian Bank"} name='Net Banking' /><label>Indian Bank</label>
-            </form>
-        }
-
-        <button type='button' onClick={PlaceOrder}>Place Order</button>
-
-    </div>
+          Place Order
+        </Button>
+      </Grid>
+    </Grid>
+  </Paper>
+</div>
   );
 }

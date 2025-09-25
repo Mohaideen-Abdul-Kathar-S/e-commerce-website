@@ -50,51 +50,121 @@ if(Loading){
 
 
   return (
-    <div>
-      
-        {GroceryData.length!=0 && <h2 id='Grocerytag' >Grocery</h2>}
-        
-        
-        {
-          createCard(GroceryData)
-            
-          
-        }
-          
+  <div
+    style={{
+      background: "linear-gradient(135deg, #f9fafb, #eef2ff)",
+      minHeight: "100vh",
+      padding: "30px 20px",
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    }}
+  >
+   
 
-           {VegetablesData.length!=0 &&<h2 id='Vegetalestag' >Vegetales</h2>}
-        
-        { createCard(VegetablesData)
-            
-          
-        }
-              {CoolDrinksData.length!=0 &&<h2 id='CoolDrinkstg' style={{"fontSize":"26px","paddingTop":"10px"}}>CoolDrinks</h2>}
-        
-        {
-          createCard(CoolDrinksData)
-            
-          
-        }
-             {SnacksData.length!=0 &&<h2 id='Snackstag' >Snacks</h2>}
-        
-        { createCard(SnacksData)
-            
-          
-        }
-             {StationariesData.length!=0 &&<h2 id='Stationariestag'  style={{"fontSize":"26px","paddingTop":"10px"}}>Stationaries</h2>}
-        
-       { createCard(StationariesData)
-            
-          
-        }
+    {/* Grocery Section */}
+    {GroceryData.length !== 0 && (
+      <h2
+        id="Grocerytag"
+        style={{
+          fontSize: "1.8rem",
+          fontWeight: "600",
+          margin: "40px 0 20px",
+          color: "#047857",
+          borderLeft: "6px solid #10b981",
+          paddingLeft: "12px",
+        }}
+      >
+        Grocery
+      </h2>
+    )}
+    {createCard(GroceryData)}
 
+    {/* Vegetables Section */}
+    {VegetablesData.length !== 0 && (
+      <h2
+        id="Vegetalestag"
+        style={{
+          fontSize: "1.8rem",
+          fontWeight: "600",
+          margin: "40px 0 20px",
+          color: "#065f46",
+          borderLeft: "6px solid #34d399",
+          paddingLeft: "12px",
+        }}
+      >
+        Vegetables
+      </h2>
+    )}
+    {createCard(VegetablesData)}
 
-        
+    {/* Cool Drinks Section */}
+    {CoolDrinksData.length !== 0 && (
+      <h2
+        id="CoolDrinkstg"
+        style={{
+          fontSize: "1.8rem",
+          fontWeight: "600",
+          margin: "40px 0 20px",
+          color: "#1e3a8a",
+          borderLeft: "6px solid #3b82f6",
+          paddingLeft: "12px",
+        }}
+      >
+        Cool Drinks
+      </h2>
+    )}
+    {createCard(CoolDrinksData)}
 
+    {/* Snacks Section */}
+    {SnacksData.length !== 0 && (
+      <h2
+        id="Snackstag"
+        style={{
+          fontSize: "1.8rem",
+          fontWeight: "600",
+          margin: "40px 0 20px",
+          color: "#7c2d12",
+          borderLeft: "6px solid #f97316",
+          paddingLeft: "12px",
+        }}
+      >
+        Snacks
+      </h2>
+    )}
+    {createCard(SnacksData)}
 
+    {/* Stationaries Section */}
+    {StationariesData.length !== 0 && (
+      <h2
+        id="Stationariestag"
+        style={{
+          fontSize: "1.8rem",
+          fontWeight: "600",
+          margin: "40px 0 20px",
+          color: "#4b5563",
+          borderLeft: "6px solid #9ca3af",
+          paddingLeft: "12px",
+        }}
+      >
+        Stationaries
+      </h2>
+    )}
+    {createCard(StationariesData)}
 
-    </div>
-  )
+    {/* Footer */}
+    <footer
+      style={{
+        textAlign: "center",
+        marginTop: "60px",
+        fontSize: "14px",
+        color: "#6b7280",
+        padding: "20px",
+      }}
+    >
+      © {new Date().getFullYear()} My Grocery Store. All rights reserved.
+    </footer>
+  </div>
+);
+
 }else{
   return(
     <div>

@@ -1,9 +1,14 @@
-.imgCont{
+#username{
     margin-top: 20px;
-    margin-left: 45%;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+
     
 }
 .profilePic{
+    margin-top: 20px;
+    margin-left: 45%;
     border: 5px solid gray;
     width: 10rem;
     height: 10rem;

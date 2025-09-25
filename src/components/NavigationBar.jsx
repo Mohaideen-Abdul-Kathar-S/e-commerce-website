@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext,useState} from 'react'
 import {BrowserRouter,Routes,Route,Link,NavLink} from 'react-router-dom'
 import All from './All'
 import Grocery from './Grocery'
@@ -25,9 +25,12 @@ import Swal from 'sweetalert2';
 import GorgotPassord from './GorgotPassord';
 import ChangePass from './ChangePass'
 import Admin from './Admin'
+import CommentsPush from './CommentsPush';
+import CustomersCommands from './CustomersCommands';
 
 export default function NavigationBar() {
   const {userID} = useContext(userContext);
+    const [menuOpen, setMenuOpen] = useState(false);
   console.log(userID);
   const divstyle = { "marginTop":" 20px",
     "marginRight":" 20px",
@@ -37,92 +40,55 @@ export default function NavigationBar() {
   return (
     <div>
         <BrowserRouter>
-        <nav>
-          <div className='logo'>
-              Arab Store
+         <nav>
+      <div className="logo">Arab Store</div>
+
+      {/* Hamburger Icon */}
+      <div
+        className="hamburger"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <ul className={menuOpen ? "show" : ""} onClick={()=>{setMenuOpen(!menuOpen)}}>
+        <li >
+          <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>All</NavLink>
+        </li>
+        <li >
+          <NavLink to="/Grocery"  className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Grocery</NavLink>
+        </li>
+        <li>
+          <NavLink to="/Vegetables" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Vegetables</NavLink>
+        </li>
+        <li>
+          <NavLink to="/CoolDrinks" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>CoolDrinks</NavLink>
+        </li>
+        <li>
+          <NavLink to="/Snacks" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Snacks</NavLink>
+        </li>
+        <li>
+          <NavLink to="/Stationaries" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Stationaries</NavLink>
+        </li>
+        <li>
+          {userID === "" && (
+            <NavLink to="/SignInRegister" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>SignIn/Register</NavLink>
+          )}
+        </li>
+      
+          <li>
+      {userID !== "" && (
+        <div className="navIcons">
+          <div style={divstyle}>
+            <Link to="/Cart"><ShoppingCart size={35} color="white" /></Link>
           </div>
-        <ul>
-         
-        
-  <li>
-    <NavLink
-      to="/"
-      className={({ isActive }) =>
-        isActive ? "nav-link active" : "nav-link"
-      }
-    >
-      All
-    </NavLink>
-  </li>
-  <li>
-    <NavLink
-      to="/Grocery"
-      className={({ isActive }) =>
-        isActive ? "nav-link active" : "nav-link"
-      }
-    >
-      Grocery
-    </NavLink>
-  </li>
-  <li>
-    <NavLink
-      to="/Vegetables"
-      className={({ isActive }) =>
-        isActive ? "nav-link active" : "nav-link"
-      }
-    >
-      Vegetables
-    </NavLink>
-  </li>
-  <li>
-    <NavLink
-      to="/CoolDrinks"
-      className={({ isActive }) =>
-        isActive ? "nav-link active" : "nav-link"
-      }
-    >
-      CoolDrinks
-    </NavLink>
-  </li>
-  <li>
-    <NavLink
-      to="/Snacks"
-      className={({ isActive }) =>
-        isActive ? "nav-link active" : "nav-link"
-      }
-    >
-      Snacks
-    </NavLink>
-  </li>
-  <li>
-    <NavLink
-      to="/Stationaries"
-      className={({ isActive }) =>
-        isActive ? "nav-link active" : "nav-link"
-      }
-    >
-      Stationaries
-    </NavLink>
-  </li>
-   <li>
-     { userID===""  && (<NavLink
-      to="/SignInRegister"
-      className={({ isActive }) =>
-        isActive ? "nav-link active" : "nav-link"
-      }
-    >
-      SignIn/Register 
-    </NavLink>)}
-  </li> 
-        </ul>
-        { userID!=="" &&  <div className='navIcons'>
-         
-           <div style={divstyle} >
-          <Link to="/Cart"><ShoppingCart size={35} /></Link></div>
-          <Link to="/Profile"><div id='profileicon'><User size={35} /></div></Link>
-          </div>}
-          
-        </nav>
+          <Link to="/Profile"><div id="profileicon"></div></Link>
+        </div>
+      )}</li>
+      </ul>
+    </nav>
         <Routes>
             <Route path='/' element={<All/>}/>
             <Route path='/Grocery' element={<Grocery/>}/>
@@ -140,6 +106,8 @@ export default function NavigationBar() {
             <Route path='/OrderedProductDetails' element={<OrderedProductDetails/>}/>
             <Route path='/SendOTP' element={<SendOTP/>}/>
             <Route path='/ViewHistory' element={<ViewHistory/>}/>
+            <Route path='/CommentsPush' element={<CommentsPush/>}/>
+            <Route path='/CustomersCommands' element={<CustomersCommands/>}/>
             <Route path='/CustomersOrders' element={<CustomersOrders/>}/>
             <Route path='/GorgotPassord' element={<GorgotPassord/>}/>
             <Route path='/ChangePass' element={<ChangePass/>}/>

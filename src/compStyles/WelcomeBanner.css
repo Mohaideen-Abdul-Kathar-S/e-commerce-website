@@ -66,3 +66,34 @@
     background-color: rgb(184, 19, 19);
     border: none;
 }
+
+@media (max-width: 768px) {
+    .inputdiv {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .inputdiv input {
+        width: 200px;
+        height: 35px;
+        font-size: 16px;
+    }
+    .inputdiv div {
+      margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #Searchbtn, #Clearbtn {
+        width: 80px;
+        height: 35px;
+        font-size: 16px;
+       
+    }
+
+    #p1,#p2 {
+        font-size: 24px;
+    }
+}

@@ -1,3 +1,4 @@
+
 .gorgotpass{
     margin-top: -18px;
     margin-left: 5px;
@@ -5,4 +6,17 @@
 }
 .gorgotpass:hover{
     color: rgb(142, 173, 213);
+}
+#box {
+    background-color:"gray";
+    width:"50vw";
+    height:"42vh";
+    margin:"auto";
+    margin-top:"20vh";
+    border-radius:"40px";
+    border:"10px double";
+    display:"flex";
+    flex-direction:"column";
+    padding:"20px";
+    box-shadow:"15px 15px 5px 5px black"
 }

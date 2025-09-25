@@ -32,13 +32,15 @@ export function WelcomeBanner({AllSearch,setAllSearch}) {
   
   <div className="welcometext">
     <p id="p1" >Hello,</p>
-      <p id="p2">{userName}</p>
+    <p id="p2">{userName}</p>
   </div>
   
   <div className="inputdiv">
     <input type="text" placeholder="Search..." value={AllSearch} onChange={onChangeHandler}/>
+    <div style={{display:'flex',gap:'10px',marginTop:'10px'}}>
     <Button id="Searchbtn">Search</Button>
     <Button id="Clearbtn" onClick={ClearSearch}>Clear</Button>
+    </div>
   </div>
   
 </div>

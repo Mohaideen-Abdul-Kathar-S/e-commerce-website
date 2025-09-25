@@ -82,195 +82,189 @@ export default function GorgotPassord() {
         }
     }
   return (
-    <div>
-        <center>
-            <div style={{width:"600px",height:"400px",backgroundColor:"rgb(156, 156, 156)",marginTop:"10%",borderRadius:"20px"}}>
-                <h3>Forgot Password</h3>
-                { otp==='1m%%%n1' && ( <>
-                <h4>To send OTP enter your userID</h4>
-                
-                <TextField 
-                              variant='outlined' 
-                              label="Email" 
-                              type='email' 
-                              name='email'  
-                             
-                              value={userEmail} 
-                              onChange={(e)=>setuserEmail(e.target.value)} 
-                              style={{paddingBottom:"15px"}}
-                              InputProps={{
-                                style:{
-                                  borderColor:"red",
-                                  color:"white"
-                                }
-                              }}
-                              InputLabelProps={{
-                    style: {
-                      color: "white",                // label color
-                    }
-                  }}
-                    sx={{
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: 'white',       // default border
-                      },
-                      '&:hover fieldset': {
-                        borderColor: 'white',       // on hover
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'white',       // on focus
-                      },
-                    },
-                    '& .MuiInputBase-input::placeholder': {
-                      color: 'white',               // placeholder text color
-                      opacity: 1,
-                    },
-                  }}
-                              required/>
-                              
-                              <br />
-                    <button style={{width:"100px",height:"50px",backgroundColor:"blue",color:"white",border:"none",borderRadius:"10px"}} onClick={sendOTP}> Send OTP</button>
-</>) || ( isverify && (
-    <>
+   <div style={{ padding: "20px" }}>
+  <center>
+    <div
+      style={{
+        width: "90%",
+        maxWidth: "600px",
+        backgroundColor: "rgb(156, 156, 156)",
+        marginTop: "10%",
+        borderRadius: "20px",
+        padding: "20px",
+        boxSizing: "border-box",
+      }}
+    >
+      <h3 style={{ color: "white", marginBottom: "20px" }}>Forgot Password</h3>
 
-        <h4>Change Password</h4>
-                
-                <TextField 
-                             variant='outlined' 
-                             label="password" 
-                             type='password' 
-                             name='password'  
-                      
-                             value={userPassword} 
-                             onChange={(e)=>setUserPassword(e.target.value)} 
-                             style={{paddingBottom:"20px"}}
-                             InputProps={{
-                               style:{
-                                 borderColor:"red",
-                                 color:"white"
-                               }
-                             }}
-                             InputLabelProps={{
-                   style: {
-                     color: "white",                // label color
-                   }
-                 }}
-                   sx={{
-                   '& .MuiOutlinedInput-root': {
-                     '& fieldset': {
-                       borderColor: 'white',       // default border
-                     },
-                     '&:hover fieldset': {
-                       borderColor: 'white',       // on hover
-                     },
-                     '&.Mui-focused fieldset': {
-                       borderColor: 'white',       // on focus
-                     },
-                   },
-                   '& .MuiInputBase-input::placeholder': {
-                     color: 'white',               // placeholder text color
-                     opacity: 1,
-                   },
-                 }}
-                             required/>
-               <TextField 
-                             variant='outlined' 
-                             label="Conform password" 
-                             type='password' 
-                             name='ConformPassword'  
-                 
-                             value={userConformPassword} 
-                             onChange={(e)=>setUserConformPassword(e.target.value)} 
-                             
-                             style={{paddingBottom:"20px"}}
-                             error={error}
-                             helperText={error  ? "Passwords should be match":""}
-                             required
-                             InputProps={{
-                               style:{
-                                 borderColor:"red",
-                                 color:"white"
-                               }
-                             }}
-                             InputLabelProps={{
-                   style: {
-                     color: "white",                // label color
-                   }
-                 }}
-               
-                   sx={{
-                   '& .MuiOutlinedInput-root': {
-                     '& fieldset': {
-                       borderColor: 'white',       // default border
-                     },
-                     '&:hover fieldset': {
-                       borderColor: 'white',       // on hover
-                     },
-                     '&.Mui-focused fieldset': {
-                       borderColor: 'white',       // on focus
-                     },
-                   },
-                   '& .MuiInputBase-input::placeholder': {
-                     color: 'white',               // placeholder text color
-                     opacity: 1,
-                   },
-                   '& label.Mui-error': {
-                 color: 'red', // red label when error
-               }
+      {otp === "1m%%%n1" ? (
+        <>
+          <h4 style={{ color: "white" }}>To send OTP enter your userID</h4>
+
+          <TextField
+            variant="outlined"
+            label="Email"
+            type="email"
+            name="email"
+            value={userEmail}
+            onChange={(e) => setuserEmail(e.target.value)}
+            fullWidth
+            margin="normal"
+            InputProps={{
+              style: {
+                color: "white",
+              },
             }}
-            />
-                              
-                              <br />
-                    <button style={{width:"100px",height:"50px",backgroundColor:"blue",color:"white",border:"none",borderRadius:"10px"}} onClick={ChangePass}>Change Password</button>
-    
-    </>
-) || (<>
-                <h4>Verificaion of OTP</h4>
-                
-                <TextField 
-                              variant='outlined' 
-                              label="OTP" 
-                              type='text' 
-                              name='OTP'  
-                             
-                              value={OTP} 
-                              onChange={(e)=>setOTP(e.target.value)} 
-                              style={{paddingBottom:"15px"}}
-                              InputProps={{
-                                style:{
-                                  borderColor:"red",
-                                  color:"white"
-                                }
-                              }}
-                              InputLabelProps={{
-                    style: {
-                      color: "white",                // label color
-                    }
-                  }}
-                    sx={{
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: 'white',       // default border
-                      },
-                      '&:hover fieldset': {
-                        borderColor: 'white',       // on hover
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: 'white',       // on focus
-                      },
-                    },
-                    '& .MuiInputBase-input::placeholder': {
-                      color: 'white',               // placeholder text color
-                      opacity: 1,
-                    },
-                  }}
-                              required/>
-                              
-                              <br />
-                    <button style={{width:"100px",height:"50px",backgroundColor:"blue",color:"white",border:"none",borderRadius:"10px"}} onClick={verifyOTP}> Verify OTP</button>
-</>))}
-            </div>
-        </center>
+            InputLabelProps={{
+              style: {
+                color: "white",
+              },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: "white" },
+                "&:hover fieldset": { borderColor: "white" },
+                "&.Mui-focused fieldset": { borderColor: "white" },
+              },
+            }}
+            required
+          />
+
+          <button
+            style={{
+              width: "100%",
+              maxWidth: "200px",
+              height: "45px",
+              backgroundColor: "blue",
+              color: "white",
+              border: "none",
+              borderRadius: "10px",
+              marginTop: "15px",
+            }}
+            onClick={sendOTP}
+          >
+            Send OTP
+          </button>
+        </>
+      ) : isverify ? (
+        <>
+          <h4 style={{ color: "white" }}>Change Password</h4>
+
+          <TextField
+            variant="outlined"
+            label="Password"
+            type="password"
+            fullWidth
+            margin="normal"
+            value={userPassword}
+            onChange={(e) => setUserPassword(e.target.value)}
+            InputProps={{
+              style: { color: "white" },
+            }}
+            InputLabelProps={{
+              style: { color: "white" },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: "white" },
+                "&:hover fieldset": { borderColor: "white" },
+                "&.Mui-focused fieldset": { borderColor: "white" },
+              },
+            }}
+            required
+          />
+
+          <TextField
+            variant="outlined"
+            label="Confirm Password"
+            type="password"
+            fullWidth
+            margin="normal"
+            value={userConformPassword}
+            onChange={(e) => setUserConformPassword(e.target.value)}
+            error={error}
+            helperText={error ? "Passwords should match" : ""}
+            InputProps={{
+              style: { color: "white" },
+            }}
+            InputLabelProps={{
+              style: { color: "white" },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: "white" },
+                "&:hover fieldset": { borderColor: "white" },
+                "&.Mui-focused fieldset": { borderColor: "white" },
+              },
+              "& label.Mui-error": { color: "red" },
+            }}
+            required
+          />
+
+          <button
+            style={{
+              width: "100%",
+              maxWidth: "200px",
+              height: "45px",
+              backgroundColor: "blue",
+              color: "white",
+              border: "none",
+              borderRadius: "10px",
+              marginTop: "15px",
+            }}
+            onClick={ChangePass}
+          >
+            Change Password
+          </button>
+        </>
+      ) : (
+        <>
+          <h4 style={{ color: "white" }}>Verification of OTP</h4>
+
+          <TextField
+            variant="outlined"
+            label="OTP"
+            type="text"
+            fullWidth
+            margin="normal"
+            value={OTP}
+            onChange={(e) => setOTP(e.target.value)}
+            InputProps={{
+              style: { color: "white" },
+            }}
+            InputLabelProps={{
+              style: { color: "white" },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": { borderColor: "white" },
+                "&:hover fieldset": { borderColor: "white" },
+                "&.Mui-focused fieldset": { borderColor: "white" },
+              },
+            }}
+            required
+          />
+
+          <button
+            style={{
+              width: "100%",
+              maxWidth: "200px",
+              height: "45px",
+              backgroundColor: "blue",
+              color: "white",
+              border: "none",
+              borderRadius: "10px",
+              marginTop: "15px",
+            }}
+            onClick={verifyOTP}
+          >
+            Verify OTP
+          </button>
+        </>
+      )}
     </div>
+  </center>
+</div>
+
   )
 }

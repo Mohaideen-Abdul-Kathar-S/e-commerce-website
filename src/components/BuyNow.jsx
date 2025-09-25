@@ -59,81 +59,130 @@ export default function BuyNow() {
 
 
   return (
-    <div>
-        
-        
-         { data.length==1 && <div><Card key ={data[0]._id} style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={data[0].image} />
-      <Card.Body>
-        <Card.Title>{data[0].name}</Card.Title>
-      
-        <Card.Text>
-          {data[0].desc}
-        </Card.Text>
-        <h5>{data[0].price}</h5>
-        <div className="text-center">
-</div>
+    <div className="container py-4">
+  <div className="row g-4">
+    {data.length === 1 ? (
+      <div className="col-12 col-md-6 col-lg-4">
+        <Card>
+          <Card.Img variant="top" src={data[0].image} />
+          <Card.Body>
+            <Card.Title>{data[0].name}</Card.Title>
+            <Card.Text>{data[0].desc}</Card.Text>
+            <h5>₹{data[0].price}</h5>
 
-        
-      </Card.Body>
-    </Card>
-            
-          
-       
-                <TextField type='number' placeholder='Quantity' name='quantity' value={quantity} onChange={(e)=>{ e.target.value<=data[0].count? setQuantity(e.target.value) : alert("Stock is limit"); data[0].quantity = e.target.value }} required/>
-            
-                <p>prince (1 item) : {data[0].price}</p>
-                <p>No. of items : {quantity}</p>
-                <p>total amount : {quantity*data[0].price}</p>
-                </div>
+            <TextField
+              fullWidth
+              type="number"
+              placeholder="Quantity"
+              name="quantity"
+              value={quantity}
+              onChange={(e) => {
+                if (e.target.value <= data[0].count) {
+                  setQuantity(e.target.value);
+                  data[0].quantity = e.target.value;
+                } else {
+                  alert("Stock is limit");
                 }
+              }}
+              sx={{ marginBottom: 2 }}
+              required
+            />
 
-                {
-                  data.length>1 && data.map((data)=>(
-                    <div key ={data._id}><Card key ={data._id} style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={data.image} />
-      <Card.Body>
-        <Card.Title>{data.name}</Card.Title>
-      
-        <Card.Text>
-          {data.desc}
-        </Card.Text>
-        <h5>{data.price}</h5>
-        <div className="text-center">
-</div>
+            <p>Price (1 item): ₹{data[0].price}</p>
+            <p>No. of items: {quantity}</p>
+            <p>Total amount: ₹{quantity * data[0].price}</p>
+          </Card.Body>
+        </Card>
+      </div>
+    ) : (
+      data.map((item) => (
+        <div key={item._id} className="col-12 col-md-6 col-lg-4">
+          <Card>
+            <Card.Img variant="top" src={item.image} />
+            <Card.Body>
+              <Card.Title>{item.name}</Card.Title>
+              <Card.Text>{item.desc}</Card.Text>
+              <h5>₹{item.price}</h5>
+              <p>Price (1 item): ₹{item.price}</p>
+              <p>No. of items: {item.quantity}</p>
+              <p>Total amount: ₹{item.quantity * item.price}</p>
+            </Card.Body>
+          </Card>
+        </div>
+      ))
+    )}
+  </div>
 
-        
-      </Card.Body>
-    </Card>
-            
-          
-       
-                {/* <TextField type='number' placeholder='Quantity' name='quantity' value={quantity} onChange={(e)=>{ setQuantity(e.target.value); data.quantity = e.target.value }} required/> */}
-            
-                <p>prince (1 item) : {data.price}</p>
-                <p>No. of items : {data.quantity}</p>
-                <p>total amount : {data.quantity*data.price}</p>
-                </div>
-                  ))
-                }
+  <hr className="my-4" />
 
-                
-      <h3>Select Delivery Location</h3>
-      <MapContainer center={[13.0827, 80.2707]} zoom={13} style={{ height: '400px', width: '100%' }}>
-        <TileLayer
-          attribution='&copy; OpenStreetMap contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <LocationMarker onSelect={handleLocationSelect} />
-      </MapContainer>
-      <br />
-      <TextField placeholder='Address...' type="text" name='address' value={address} onChange={(e)=>setAddress(e.target.value)} rows={4} multiline required/>
-        <TextField placeholder='City' type="text" name='City' value={City} onChange={(e)=>setCity(e.target.value)} required/>
-             <TextField placeholder='Pincode' type="text" name='Pincode' value={Pincode} onChange={(e)=>setPincode(e.target.value)} required/>
- 
-    
-            
-       <Link to="/TransactionMode" state={{data,loc}}>  <Button variant="secondary" style={{paddingLeft:"20px",paddingRight:"20px",margin:"10px"}} onClick={handleSubmit}>Continue</Button></Link>
+  <h3>Select Delivery Location</h3>
+  <div className="mb-4" style={{ height: "400px", width: "100%" }}>
+    <MapContainer
+      center={[13.0827, 80.2707]}
+      zoom={13}
+      style={{ height: "100%", width: "100%" }}
+    >
+      <TileLayer
+        attribution="&copy; OpenStreetMap contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <LocationMarker onSelect={handleLocationSelect} />
+    </MapContainer>
+  </div>
+
+  <div className="row g-3">
+    <div className="col-12">
+      <TextField
+        fullWidth
+        placeholder="Address..."
+        type="text"
+        name="address"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        rows={4}
+        multiline
+        required
+      />
     </div>
+    <div className="col-md-6">
+      <TextField
+        fullWidth
+        placeholder="City"
+        type="text"
+        name="City"
+        value={City}
+        onChange={(e) => setCity(e.target.value)}
+        required
+      />
+    </div>
+    <div className="col-md-6">
+      <TextField
+        fullWidth
+        placeholder="Pincode"
+        type="text"
+        name="Pincode"
+        value={Pincode}
+        onChange={(e) => setPincode(e.target.value)}
+        required
+      />
+    </div>
+  </div>
+
+  <div className="text-center mt-4">
+    <Link to="/TransactionMode" state={{ data, loc }}>
+      <Button
+        variant="secondary"
+        style={{
+          paddingLeft: "20px",
+          paddingRight: "20px",
+        }}
+        onClick={handleSubmit}
+      >
+        Continue
+      </Button>
+    </Link>
+  </div>
+</div>
+
   )
 }

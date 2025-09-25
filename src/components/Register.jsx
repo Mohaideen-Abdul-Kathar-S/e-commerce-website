@@ -56,179 +56,178 @@ export default function Register() {
         }
     }
   return (
-    <div >
-        <div style={{backgroundColor:"gray",width:"50vw",height:"60vh",margin:"auto",marginTop:"20vh",borderRadius:"40px",border:"10px double",display:"flex",flexDirection:"column",padding:"20px",boxShadow:"15px 15px 5px 5px black"}}>
-              <h2 style={{paddingBottom:"15px",color:"white"}}>Register</h2>
-            <TextField 
-              variant='outlined' 
-              label="Name" 
-              type='text' 
-              name='name'  
-           
-              value={userName} 
-              onChange={(e)=>setUserName(e.target.value)} 
-              style={{paddingBottom:"15px"}}
-              InputProps={{
-                style:{
-                  borderColor:"red",
-                  color:"white"
-                }
-              }}
-              InputLabelProps={{
-    style: {
-      color: "white",                // label color
-    }
-  }}
-    sx={{
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'white',       // default border
-      },
-      '&:hover fieldset': {
-        borderColor: 'white',       // on hover
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'white',       // on focus
-      },
-    },
-    '& .MuiInputBase-input::placeholder': {
-      color: 'white',               // placeholder text color
-      opacity: 1,
-    },
-  }}
-              required/>
-
-          
-            <TextField 
-              variant='outlined' 
-              label="Email" 
-              type='email' 
-              name='email'  
-       
-              value={userEmail} 
-              onChange={(e)=>setUserEmail(e.target.value)} 
-              style={{paddingBottom:"15px"}}
-              InputProps={{
-                style:{
-                  borderColor:"red",
-                  color:"white"
-                }
-              }}
-              InputLabelProps={{
-    style: {
-      color: "white",                // label color
-    }
-  }}
-    sx={{
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'white',       // default border
-      },
-      '&:hover fieldset': {
-        borderColor: 'white',       // on hover
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'white',       // on focus
-      },
-    },
-    '& .MuiInputBase-input::placeholder': {
-      color: 'white',               // placeholder text color
-      opacity: 1,
-    },
-  }}
-              required/>
-
-            <TextField 
-              variant='outlined' 
-              label="password" 
-              type='password' 
-              name='password'  
-       
-              value={userPassword} 
-              onChange={(e)=>setUserPassword(e.target.value)} 
-              style={{paddingBottom:"20px"}}
-              InputProps={{
-                style:{
-                  borderColor:"red",
-                  color:"white"
-                }
-              }}
-              InputLabelProps={{
-    style: {
-      color: "white",                // label color
-    }
-  }}
-    sx={{
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'white',       // default border
-      },
-      '&:hover fieldset': {
-        borderColor: 'white',       // on hover
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'white',       // on focus
-      },
-    },
-    '& .MuiInputBase-input::placeholder': {
-      color: 'white',               // placeholder text color
-      opacity: 1,
-    },
-  }}
-              required/>
-<TextField 
-              variant='outlined' 
-              label="Conform password" 
-              type='password' 
-              name='ConformPassword'  
+    <div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "100vh",
   
-              value={userConformPassword} 
-              onChange={(e)=>setUserConformPassword(e.target.value)} 
-              
-              style={{paddingBottom:"20px"}}
-              error={error}
-              helperText={error  ? "Passwords should be match":""}
-              required
-              InputProps={{
-                style:{
-                  borderColor:"red",
-                  color:"white"
-                }
-              }}
-              InputLabelProps={{
-    style: {
-      color: "white",                // label color
-    }
+    padding: "10px"
   }}
+>
+  <div
+    style={{
+      backgroundColor: "gray",
+      width: "90%",
+      maxWidth: "450px",
+      borderRadius: "20px",
+      border: "5px double",
+      display: "flex",
+      flexDirection: "column",
+      padding: "20px",
+      boxShadow: "8px 8px 5px rgba(0,0,0,0.6)"
+    }}
+  >
+    <h2 style={{ paddingBottom: "15px", color: "white", textAlign: "center" }}>
+      Register
+    </h2>
 
-    sx={{
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'white',       // default border
-      },
-      '&:hover fieldset': {
-        borderColor: 'white',       // on hover
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'white',       // on focus
-      },
-    },
-    '& .MuiInputBase-input::placeholder': {
-      color: 'white',               // placeholder text color
-      opacity: 1,
-    },
-    '& label.Mui-error': {
-  color: 'red', // red label when error
-}
-  }}
-  />
-              
-              <div style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
-                <button  onClick={()=>navigate('/SignInRegister') } style={{border:"none",color:"white",padding:"5px",width:"80px",height:"40px",borderRadius:"10px",backgroundColor:"greenyellow",margin:"10px",fontWeight:"600"}}>Login</button>
-              <button onClick={SubmitRegister} style={{border:"none",color:"white",padding:"5px",width:"80px",height:"40px",borderRadius:"10px",backgroundColor:"blue",margin:"10px",fontWeight:"600"}}>Register</button>
-            
-              </div>
-        </div>
+    {/* Name */}
+    <TextField
+      variant="outlined"
+      label="Name"
+      type="text"
+      name="name"
+      value={userName}
+      onChange={(e) => setUserName(e.target.value)}
+      style={{ marginBottom: "15px" }}
+      InputProps={{
+        style: { color: "white" }
+      }}
+      InputLabelProps={{
+        style: { color: "white" }
+      }}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': { borderColor: 'white' },
+          '&:hover fieldset': { borderColor: 'white' },
+          '&.Mui-focused fieldset': { borderColor: 'white' }
+        }
+      }}
+      required
+    />
+
+    {/* Email */}
+    <TextField
+      variant="outlined"
+      label="Email"
+      type="email"
+      name="email"
+      value={userEmail}
+      onChange={(e) => setUserEmail(e.target.value)}
+      style={{ marginBottom: "15px" }}
+      InputProps={{
+        style: { color: "white" }
+      }}
+      InputLabelProps={{
+        style: { color: "white" }
+      }}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': { borderColor: 'white' },
+          '&:hover fieldset': { borderColor: 'white' },
+          '&.Mui-focused fieldset': { borderColor: 'white' }
+        }
+      }}
+      required
+    />
+
+    {/* Password */}
+    <TextField
+      variant="outlined"
+      label="Password"
+      type="password"
+      name="password"
+      value={userPassword}
+      onChange={(e) => setUserPassword(e.target.value)}
+      style={{ marginBottom: "15px" }}
+      InputProps={{
+        style: { color: "white" }
+      }}
+      InputLabelProps={{
+        style: { color: "white" }
+      }}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': { borderColor: 'white' },
+          '&:hover fieldset': { borderColor: 'white' },
+          '&.Mui-focused fieldset': { borderColor: 'white' }
+        }
+      }}
+      required
+    />
+
+    {/* Confirm Password */}
+    <TextField
+      variant="outlined"
+      label="Confirm Password"
+      type="password"
+      name="confirmPassword"
+      value={userConformPassword}
+      onChange={(e) => setUserConformPassword(e.target.value)}
+      style={{ marginBottom: "20px" }}
+      error={error}
+      helperText={error ? "Passwords should match" : ""}
+      InputProps={{
+        style: { color: "white" }
+      }}
+      InputLabelProps={{
+        style: { color: "white" }
+      }}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': { borderColor: 'white' },
+          '&:hover fieldset': { borderColor: 'white' },
+          '&.Mui-focused fieldset': { borderColor: 'white' }
+        },
+        '& label.Mui-error': { color: 'red' }
+      }}
+      required
+    />
+
+    {/* Buttons */}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        flexWrap: "wrap",
+        gap: "10px",
+        marginTop: "10px"
+      }}
+    >
+      <button
+        onClick={() => navigate('/SignInRegister')}
+        style={{
+          border: "none",
+          color: "white",
+          padding: "10px",
+          minWidth: "100px",
+          borderRadius: "10px",
+          backgroundColor: "greenyellow",
+          fontWeight: "600"
+        }}
+      >
+        Login
+      </button>
+      <button
+        onClick={SubmitRegister}
+        style={{
+          border: "none",
+          color: "white",
+          padding: "10px",
+          minWidth: "100px",
+          borderRadius: "10px",
+          backgroundColor: "blue",
+          fontWeight: "600"
+        }}
+      >
+        Register
+      </button>
     </div>
+  </div>
+</div>
+
   )
 }
