@@ -22,6 +22,27 @@ export default function Profile() {
   const [orderData,setOrderData] = useState([]);
   const navigate = useNavigate();
 
+   const [expenses, setExpenses] = useState([]);
+
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      try {
+        const res = await axios.get(`http://localhost:4000/user/${userID}/expenses`);
+        setExpenses(res.data.userExpense || []);
+      } catch (err) {
+        console.error("Error fetching expenses", err);
+      }
+    };
+    fetchExpenses();
+  }, [userID]);
+
+  const getStatus = (total, spend) => {
+    if (spend < total) return { text: "Credit (You need to pay)", color: "bg-red-100 text-red-700 border-red-400" };
+    if (spend > total) return { text: "Balance (Shop owes you)", color: "bg-green-100 text-green-700 border-green-400" };
+    return { text: "Settled (No balance)", color: "bg-yellow-100 text-yellow-700 border-yellow-400" };
+  };
+
+
     // ✅ Reusable Styles
   const containerStyle = {
     maxWidth: "600px",
@@ -432,8 +453,79 @@ export default function Profile() {
         </div> || 
         <div className='OpenDetails'>
             <div className='LocationHead'>Accounts  <X onClick={()=>setViewAccounts(false)} className='X' style={{marginLeft:"90vw",cursor:'pointer'}}/></div>
-            <label >Balance : -200</label><br />
-            <button style={{margin:"20px",border:"none",padding:"10px",borderRadius:"10px",fontSize:"18px",backgroundColor:"yellow",color:"gray"}}>View Transaction</button>
+            <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-2xl">
+  <h2 className="text-2xl font-bold mb-6 text-gray-800">🧾 Expense Tracker</h2>
+
+  {/* === Final Report === */}
+  {expenses.length > 0 && (() => {
+    const totals = expenses.reduce(
+      (acc, exp) => {
+        acc.totalPurchased += exp.totalAmount;
+        acc.totalPaid += exp.spendAmount;
+
+        if (exp.spendAmount < exp.totalAmount) {
+          acc.userOwes += exp.totalAmount - exp.spendAmount; // user owes shop
+        } else if (exp.spendAmount > exp.totalAmount) {
+          acc.shopOwes += exp.spendAmount - exp.totalAmount; // shop owes user
+        }
+
+        return acc;
+      },
+      { totalPurchased: 0, totalPaid: 0, userOwes: 0, shopOwes: 0 }
+    );
+
+    let finalStatus = "";
+    let statusColor = "";
+
+    if (totals.userOwes > 0 && totals.shopOwes === 0) {
+      finalStatus = `You need to pay ₹${totals.userOwes} to the shop.`;
+      statusColor = "text-red-600";
+    } else if (totals.shopOwes > 0 && totals.userOwes === 0) {
+      finalStatus = `Shop needs to return ₹${totals.shopOwes} to you.`;
+      statusColor = "text-green-600";
+    } else {
+      finalStatus = "All accounts are settled (0 balance).";
+      statusColor = "text-gray-600";
+    }
+
+    return (
+      <div className="mb-6 p-4 rounded-xl bg-gray-100 shadow-md">
+        <p className="font-bold text-lg text-gray-800">📊 Final Report</p>
+        <p className="text-gray-700">Total Purchased: ₹{totals.totalPurchased}</p>
+        <p className="text-gray-700">Total Paid: ₹{totals.totalPaid}</p>
+        <p className={`mt-2 font-semibold ${statusColor}`}>{finalStatus}</p>
+      </div>
+    );
+  })()}
+
+  {/* === Expense List === */}
+  {expenses.length === 0 ? (
+    <p className="text-gray-500 text-center">No expenses recorded yet.</p>
+  ) : (
+    <div className="space-y-4">
+      {expenses.map((exp, idx) => {
+        const status = getStatus(exp.totalAmount, exp.spendAmount);
+        return (
+          <div
+            key={idx}
+            className={`p-4 rounded-xl border flex justify-between items-center shadow-sm ${status.color}`}
+          >
+            <div>
+              <p className="text-sm text-gray-500">Order ID: {exp.orderId}</p>
+              <p className="font-semibold text-lg">Purchased: ₹{exp.totalAmount}</p>
+              <p className="font-medium">Paid: ₹{exp.spendAmount}</p>
+              <p className="text-xs text-gray-500">
+                Date: {new Date(exp.date).toLocaleDateString()}
+              </p>
+            </div>
+            <div className="font-bold text-right">{status.text}</div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</div>
+
             </div>}
 
       </div>

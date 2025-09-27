@@ -25,6 +25,7 @@
     "react-leaflet": "^5.0.0",
     "react-loading-indicators": "^1.0.1",
     "react-router-dom": "^7.6.2",
+    "sweetalert": "^2.1.2",
     "sweetalert2": "^11.22.2"
   },
   "devDependencies": {

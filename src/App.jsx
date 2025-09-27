@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import FloatingSearchBall from "./components/FloatingSearchBall";
 import RecommendWidget from "./components/RecommendWidget";
+import GroceryChat from "./components/GroceryChat";
 
 export let userContext = createContext();
 function App() {
@@ -245,6 +246,7 @@ const createCard = (Data) => {
     <NavigationBar/>
     <RecommendWidget/>
     <FloatingSearchBall/>
+    <GroceryChat/>
 
     {addtocart._id!="" && (
             <div style={{

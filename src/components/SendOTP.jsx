@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 import {
   Box,
   Typography,
@@ -47,8 +48,45 @@ function SendOTP() {
         await axios.post(`http://localhost:4000/Delivery/${orderID}`);
         setSuccess(true);
         setMessage("✅ Order marked as Delivered!");
+        // Prompt user to enter amount
+swal({
+  title: "Enter Amount",
+  text: "Please enter the amount",
+  content: "input",
+  button: true,
+})
+.then(async (value) => {
+  if (value) {
+    let amount = parseFloat(value);
+
+    try {
+      // Call API and wait until it finishes
+      await axios.post(`http://localhost:4000/userExpense`, {
+  orderId: orderID,
+  spendAmount: amount,
+});
+
+      // Only after API success, show success alert
+      swal("Success", `You entered: ₹${amount}`, "success");
+      
+      // 👉 You can move to next step here
+      // e.g., redirect or reload
+      // window.location.href = "/orders";
+
+    } catch (error) {
+      console.error("API Error:", error);
+      swal("Error", "Failed to save expense. Please try again!", "error");
+    }
+
+  } else {
+    swal("Cancelled", "No amount entered", "error");
+  }
+});
+
+
         setTimeout(() => navigate("/CustomersOrders", { state: { isLogin: true } }), 1500);
       } catch (err) {
+        console.error(err);
         setMessage("❌ Delivery update failed");
       }
     } else {
