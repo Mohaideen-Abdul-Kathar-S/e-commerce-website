@@ -1,6 +1,131 @@
-.cards {
-    display: "flex"; 
-    gap: "20px";
-    flex-wrap: "wrap" ;
-    padding-left:"15px";
+/* Grid Layout */
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 1rem;
+}
+
+/* Product Card */
+.product-card {
+  width: 270px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Image */
+.card-image {
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Card Body */
+.card-body {
+  padding: 1rem 1rem 1.5rem;
+  text-align: center;
+}
+
+.card-body h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.3rem;
+}
+
+.card-body p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  min-height: 45px;
+  margin-bottom: 0.5rem;
+}
+
+.card-body h4 {
+  color: #dc2626;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Buttons */
+.card-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #e11d48, #f43f5e);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #be123c, #e11d48);
+}
+
+.btn-secondary {
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(90deg, #1e3a8a, #2563eb);
+}
+
+.btn-disabled {
+  background: #9ca3af;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-card {
+    width: 90%;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
 }

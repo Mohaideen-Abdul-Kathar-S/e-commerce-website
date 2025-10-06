@@ -9,7 +9,7 @@ export default function All() {
     <div>
         <WelcomeBanner AllSearch = {AllSearch} setAllSearch={setAllSearch}/>
         <AllList AllSearch = {AllSearch}/>
-        <Footer/>
+    
     </div>
   )
 }

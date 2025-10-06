@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import "../compStyles/GroceryChat.css"; // Import the CSS file
+// src/components/GroceryChat.jsx
+import React, { useState, useContext } from "react";
+import "../compStyles/GroceryChat.css"; 
 import { userContext } from '../App';
 
 function GroceryChat() {
-    const {userID} = React.useContext(userContext);
+  const { userID } = useContext(userContext);
   const [messages, setMessages] = useState([
     { role: "system", content: "Hi! 👋 Ask me anything about our grocery store." },
   ]);
@@ -23,7 +24,8 @@ function GroceryChat() {
       });
 
       const data = await res.json();
-      const botMessage = { role: "assistant", content: data.reply };
+      console.log(data.response);
+      const botMessage = { role: "assistant", content: data.response };
       setMessages((prev) => [...prev, botMessage]);
     } catch (err) {
       setMessages((prev) => [
@@ -40,19 +42,26 @@ function GroceryChat() {
       <div className="chat-box">
         <div className="messages">
           {messages.map((m, idx) => (
-            <div
-              key={idx}
-              className={`message ${m.role === "user" ? "user" : "assistant"}`}
-            >
-              {m.content}
-            </div>
-          ))}
+  <div
+    key={idx}
+    className={`message ${m.role === "user" ? "user" : "assistant"}`}
+  >
+    {m.content.split("\n").map((line, i) => (
+      <React.Fragment key={i}>
+        {line}
+        <br />
+      </React.Fragment>
+    ))}
+  </div>
+))}
+
         </div>
         <div className="input-box">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about products..."
+            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           />
           <button onClick={sendMessage}>Send</button>
         </div>

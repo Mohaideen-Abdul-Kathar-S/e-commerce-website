@@ -11,6 +11,8 @@ import axios from 'axios';
 import FloatingSearchBall from "./components/FloatingSearchBall";
 import RecommendWidget from "./components/RecommendWidget";
 import GroceryChat from "./components/GroceryChat";
+import './app.css'
+import FAB from "./components/Fab";
 
 export let userContext = createContext();
 function App() {
@@ -26,6 +28,12 @@ function App() {
     _id:''
   });
     const [quantity,setQuantity] = useState(1);
+
+   const [chatOpen, setChatOpen] = useState(false);
+
+  const handleFABClick = () => {
+    setChatOpen((prev) => !prev); // Toggle chat box
+  };
 
     const addToCart = (data)=>{
 
@@ -47,146 +55,37 @@ function App() {
 
 const createCard = (Data) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "20px",
-        flexWrap: "wrap",
-        paddingLeft: "15px",
-        justifyContent: "center",
-      }}
-    >
+    <div className="card-grid">
       {Data.map((data) => (
-        <div
-          key={data._id}
-          style={{
-            width: "280px",
-            background: "#fff",
-            borderRadius: "12px",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column",
-            transition: "transform 0.3s ease, box-shadow 0.3s ease",
-          }}
-          className="custom-card"
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "scale(1.05)";
-            e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.25)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "scale(1)";
-            e.currentTarget.style.boxShadow = "0 4px 10px rgba(0,0,0,0.15)";
-          }}
-        >
-          {/* Card Image */}
-          <div
-            style={{
-              width: "100%",
-              height: "200px",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={data.image}
-              alt={data.name}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-            />
+        <div key={data._id} className="product-card">
+          <div className="card-image">
+            <img src={data.image} alt={data.name} />
           </div>
-
-          {/* Card Body */}
-          <div style={{ paddingLeft: "15px",paddingRight: "15px",paddingBottom: "15px", flex: "1" }}>
-            <h3
-              style={{
-                fontSize: "18px",
-                fontWeight: "600",
-                marginBottom: "8px",
-              }}
-            >
-              {data.name}
-            </h3>
-            <p style={{ fontSize: "14px", color: "#555", minHeight: "50px" }}>
-              {data.desc}
-            </p>
-            <h4 style={{ color: "#e63946", margin: "10px 0" }}>
-              ₹ {data.price}
-            </h4>
-
-            {/* Buttons */}
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          <div className="card-body">
+            <h3>{data.name}</h3>
+            <p>{data.desc}</p>
+            <h4>₹ {data.price}</h4>
+            <div className="card-buttons">
               {data.count > 0 ? (
-                <Link to={BuyNow} state={{ data: [data] }}>
-                  <button
-                    style={{
-                      background: "#e63946",
-                      color: "#fff",
-                      border: "none",
-                      padding: "8px 14px",
-                      borderRadius: "6px",
-                      cursor: "pointer",
-                      fontSize: "14px",
-                      transition: "background 0.3s ease",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "#b91c1c")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = "#e63946")
-                    }
-                  >
-                    Buy Now
-                  </button>
+                <Link to="/BuyNow" state={{ data: [data] }}>
+                  <button className="btn-primary">Buy Now</button>
                 </Link>
               ) : (
                 <button
-                  style={{
-                    background: "#ccc",
-                    color: "#fff",
-                    border: "none",
-                    padding: "8px 14px",
-                    borderRadius: "6px",
-                    cursor: "not-allowed",
-                    fontSize: "12px",
-                  }}
-                  onClick={() => {
+                  className="btn-disabled"
+                  onClick={() =>
                     Swal.fire({
                       icon: "warning",
                       title: "Item is out of stock",
                       showConfirmButton: false,
                       timer: 1000,
-                    });
-                  }}
+                    })
+                  }
                 >
                   Out of Stock
                 </button>
               )}
-
-              <button
-                style={{
-                  background: "#2563eb",
-                  color: "#fff",
-                  border: "none",
-                  padding: "8px 14px",
-                  borderRadius: "6px",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  fontSize: "14px",
-                  transition: "background 0.3s ease",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "#1e40af")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = "#2563eb")
-                }
-                onClick={() => addToCart(data)}
-              >
+              <button className="btn-secondary" onClick={() => addToCart(data)}>
                 <ShoppingCart size={16} /> Add to Cart
               </button>
             </div>
@@ -196,6 +95,7 @@ const createCard = (Data) => {
     </div>
   );
 };
+
 
 
 //     const createCard = (Data)=>{
@@ -244,9 +144,9 @@ const createCard = (Data) => {
   return (
     <userContext.Provider value={{UserAddr,setUserAddr,UserCity,setUserCity,setUserNOH,UserNOH,setUserGender,UserGender,userID,setUserID,UserName,setUserName,createCard}}>
     <NavigationBar/>
-    <RecommendWidget/>
-    <FloatingSearchBall/>
-    <GroceryChat/>
+   
+    {chatOpen && <GroceryChat />}
+     <FAB onClick={handleFABClick} />
 
     {addtocart._id!="" && (
             <div style={{

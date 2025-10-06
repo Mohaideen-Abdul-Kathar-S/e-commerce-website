@@ -1,12 +1,85 @@
+/* Background Container */
+.product-container {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #f9fafb, #e0e7ff, #fce7f3);
+  padding: 2.5rem 1.5rem;
+  font-family: "Poppins", sans-serif;
+  animation: fadeIn 1s ease;
+}
 
-@media (max-width: 768px) {
-    #Grocerytag,#CoolDrinkstg,#Stationariestag,
-    #Vegetalestag,#Snackstag{
-        width: 120px;
-        height: 40px;
-        padding: 8px;
-        align-items: center;
-        font-size: 18px;
-    }
-     
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section Title with Ribbon Style */
+.section-title {
+  position: relative;
+  display: inline-block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding: 0.5rem 1.5rem;
+  margin: 2.5rem 0 1.5rem;
+  border-radius: 8px;
+  color: white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.section-title::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 0;
+  height: 100%;
+  width: 12px;
+  border-radius: 8px 0 0 8px;
+}
+
+/* Different color ribbons */
+
+.section-title.Suggesstions {
+  background: linear-gradient(90deg, #db2777, #f43f5e);
+}
+
+.section-title.grocery {
+  background: linear-gradient(90deg, #059669, #34d399);
+}
+
+.section-title.vegetables {
+  background: linear-gradient(90deg, #16a34a, #4ade80);
+}
+
+.section-title.cool-drinks {
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+.section-title.snacks {
+  background: linear-gradient(90deg, #ea580c, #fb923c);
+}
+
+.section-title.stationaries {
+  background: linear-gradient(90deg, #6b7280, #9ca3af);
+}
+
+/* Loading Container */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 4rem;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  background: rgba(255, 255, 255, 0.85);
+  border-top: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  backdrop-filter: blur(10px);
 }

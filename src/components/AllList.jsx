@@ -1,178 +1,134 @@
-import React, { useEffect, useState, useContext } from 'react'
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import { Archive,ShoppingCart } from 'lucide-react';
-import '../compStyles/AllList.css'
-import axios from 'axios';
-import { userContext } from '../App';
-import TextField from '@mui/material/TextField';
-import {Commet} from 'react-loading-indicators';
-import Swal from 'sweetalert2';
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState, useContext } from "react";
+import { ShoppingCart } from "lucide-react";
+import "../compStyles/AllList.css";
+import axios from "axios";
+import { userContext } from "../App";
+import { Commet } from "react-loading-indicators";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
-export default function AllList({AllSearch}) {
-  const [Loading,setLoading]=useState(false);
+export default function AllList({ AllSearch }) {
+  const [Loading, setloading] = useState(false);
+  const { userID, createCard } = useContext(userContext);
 
-  const {userID,createCard} = useContext(userContext);
+  const [GroceryData, setGrocey] = useState([]);
+  const [VegetablesData, setVegetables] = useState([]);
+  const [CoolDrinksData, setCoolDrinks] = useState([]);
+  const [SnacksData, setSnacks] = useState([]);
+  const [StationariesData, setStationaries] = useState([]);
+   const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [weather, setWeather] = useState(null);
+  const [localTime, setLocalTime] = useState(null);
+  const [error, setError] = useState(null);
 
- 
+    const getAndRecommend = () => {
+    setError(null);
+    if (!navigator.geolocation) {
+      setError("Geolocation not supported by your browser.");
+      return;
+    }
+    setLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        try {
+          const res = await fetch("http://127.0.0.1:8000/recommend", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ lat, lon }),
+          });
+          const data = await res.json();
+          if (res.ok) {
+            console.log(data);
+            setWeather(data.weather);
+            console.log(data.weather)
+            setLocalTime(data.local_time);
+            console.log(data.local_time)
+            setSuggestions(data.suggestions || []);
+            console.log(data.suggestions);
 
-    const [GroceryData,setGrocey] = useState([]);
-    const [VegetablesData,setVegetables] = useState([]);
-    const [CoolDrinksData,setCoolDrinks] = useState([]);
-    const [SnacksData,setSnacks] = useState([]);
-    const [StationariesData,setStationaries] = useState([]);
-    const filteringProducts = (data,categorytype)=>data.filter((data)=>data.category==categorytype &&(AllSearch=='' || data.name.toLowerCase().includes(AllSearch.toLowerCase()) || AllSearch.toLowerCase().includes(data.name.toLowerCase()))).slice(0, 10);
-    useEffect(()=>{
-      axios.get("http://localhost:4000/getAllProducts")
-      .then((res)=>{
-        setGrocey(filteringProducts(res.data,'grocery'));
-        setVegetables(filteringProducts(res.data,'vegetables'));
-        setCoolDrinks(filteringProducts(res.data,'cooldrinks'));
-        setSnacks(filteringProducts(res.data,'snacks'));
-        setStationaries(filteringProducts(res.data,'stationaries'));
+          } else {
+            console.log(data)
+            setError(data);
+          }
+        } catch (err) {
+          setError(err.message || "Network error");
+        } finally {
+          setLoading(false);
+        }
+      },
+      (err) => {
+        setError("Permission denied or failed to get location: " + err.message);
+        setLoading(false);
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 10000,
+      }
+    );
+  };
+
+    useEffect(() => {
+    getAndRecommend();
+  }, []);
+
+  const filteringProducts = (data, categorytype) =>
+    data
+      .filter(
+        (data) =>
+          data.category === categorytype &&
+          (AllSearch === "" ||
+            data.name.toLowerCase().includes(AllSearch.toLowerCase()) ||
+            AllSearch.toLowerCase().includes(data.name.toLowerCase()))
+      )
+      .slice(0, 10);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getAllProducts")
+      .then((res) => {
+        setGrocey(filteringProducts(res.data, "grocery"));
+        setVegetables(filteringProducts(res.data, "vegetables"));
+        setCoolDrinks(filteringProducts(res.data, "cooldrinks"));
+        setSnacks(filteringProducts(res.data, "snacks"));
+        setStationaries(filteringProducts(res.data, "stationaries"));
       })
-      .catch((err)=>{
-        console.err(err);
-      })
-      .finally(()=>setLoading(true))
-      ,[AllSearch]
-})
+      .catch((err) => console.error(err))
+      .finally(() => setloading(true));
+  }, [AllSearch]);
 
-
-
- 
-
-
-
-
-if(Loading){
-
+  if (!Loading) {
+    return (
+      <div className="loading-container">
+        <Commet color="#7e22ce" size="medium" text="Loading..." textColor="#a855f7" />
+      </div>
+    );
+  }
 
   return (
-  <div
-    style={{
-      background: "linear-gradient(135deg, #f9fafb, #eef2ff)",
-      minHeight: "100vh",
-      padding: "30px 20px",
-      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    }}
-  >
-   
+    <div className="product-container">
 
-    {/* Grocery Section */}
-    {GroceryData.length !== 0 && (
-      <h2
-        id="Grocerytag"
-        style={{
-          fontSize: "1.8rem",
-          fontWeight: "600",
-          margin: "40px 0 20px",
-          color: "#047857",
-          borderLeft: "6px solid #10b981",
-          paddingLeft: "12px",
-        }}
-      >
-        Grocery
-      </h2>
-    )}
-    {createCard(GroceryData)}
+      {GroceryData.length !== 0 && <h2 className="section-title Suggesstions">🥫 Suggesstions</h2>}
+      {createCard(suggestions)}
 
-    {/* Vegetables Section */}
-    {VegetablesData.length !== 0 && (
-      <h2
-        id="Vegetalestag"
-        style={{
-          fontSize: "1.8rem",
-          fontWeight: "600",
-          margin: "40px 0 20px",
-          color: "#065f46",
-          borderLeft: "6px solid #34d399",
-          paddingLeft: "12px",
-        }}
-      >
-        Vegetables
-      </h2>
-    )}
-    {createCard(VegetablesData)}
+      {GroceryData.length !== 0 && <h2 className="section-title grocery">🥫 Grocery</h2>}
+      {createCard(GroceryData)}
 
-    {/* Cool Drinks Section */}
-    {CoolDrinksData.length !== 0 && (
-      <h2
-        id="CoolDrinkstg"
-        style={{
-          fontSize: "1.8rem",
-          fontWeight: "600",
-          margin: "40px 0 20px",
-          color: "#1e3a8a",
-          borderLeft: "6px solid #3b82f6",
-          paddingLeft: "12px",
-        }}
-      >
-        Cool Drinks
-      </h2>
-    )}
-    {createCard(CoolDrinksData)}
+      {VegetablesData.length !== 0 && <h2 className="section-title vegetables">🥦 Vegetables</h2>}
+      {createCard(VegetablesData)}
 
-    {/* Snacks Section */}
-    {SnacksData.length !== 0 && (
-      <h2
-        id="Snackstag"
-        style={{
-          fontSize: "1.8rem",
-          fontWeight: "600",
-          margin: "40px 0 20px",
-          color: "#7c2d12",
-          borderLeft: "6px solid #f97316",
-          paddingLeft: "12px",
-        }}
-      >
-        Snacks
-      </h2>
-    )}
-    {createCard(SnacksData)}
+      {CoolDrinksData.length !== 0 && <h2 className="section-title cool-drinks">🥤 Cool Drinks</h2>}
+      {createCard(CoolDrinksData)}
 
-    {/* Stationaries Section */}
-    {StationariesData.length !== 0 && (
-      <h2
-        id="Stationariestag"
-        style={{
-          fontSize: "1.8rem",
-          fontWeight: "600",
-          margin: "40px 0 20px",
-          color: "#4b5563",
-          borderLeft: "6px solid #9ca3af",
-          paddingLeft: "12px",
-        }}
-      >
-        Stationaries
-      </h2>
-    )}
-    {createCard(StationariesData)}
+      {SnacksData.length !== 0 && <h2 className="section-title snacks">🍪 Snacks</h2>}
+      {createCard(SnacksData)}
 
-    {/* Footer */}
-    <footer
-      style={{
-        textAlign: "center",
-        marginTop: "60px",
-        fontSize: "14px",
-        color: "#6b7280",
-        padding: "20px",
-      }}
-    >
-      © {new Date().getFullYear()} My Grocery Store. All rights reserved.
-    </footer>
-  </div>
-);
+      {StationariesData.length !== 0 && <h2 className="section-title stationaries">✏️ Stationaries</h2>}
+      {createCard(StationariesData)}
 
-}else{
-  return(
-    <div>
-      <center>
- <Commet color="#07266e" size="medium" text="Loading..." textColor="#5666c2" />
-      </center>
-     
+      <footer className="footer">© {new Date().getFullYear()} My Grocery Store. All rights reserved.</footer>
     </div>
-  )
-}
+  );
 }

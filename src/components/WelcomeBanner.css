@@ -1,0 +1,238 @@
+/* Background container */
+.banner-container {
+  position: relative;
+  width: 100%;
+  min-height: 35vh;
+  background: linear-gradient(135deg, #7e22ce, #9333ea, #f472b6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  overflow: hidden;
+}
+
+/* Subtle gradient overlay for visual depth */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+}
+
+/* Content box with glass look */
+.banner-content {
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  z-index: 1;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Fade-in effect */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Headings */
+.greeting {
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: 0.25rem;
+  color: #e0e0e0;
+}
+
+.username {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.tagline {
+  font-size: 1rem;
+  color: #f3e8ff;
+  margin-bottom: 2rem;
+}
+
+/* Search Section */
+.search-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Search Input */
+.search-box {
+  width: 100%;
+  max-width: 18rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 9999px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.search-box:focus {
+  box-shadow: 0 0 15px rgba(147, 51, 234, 0.5);
+}
+
+/* Buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Primary (Search) Button */
+.search-btn {
+  background-color: #9333ea;
+  color: white;
+}
+
+.search-btn:hover {
+  background-color: #a855f7;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+}
+
+.upload-btn {
+  background-color: #f472b6;
+  color: white;
+}
+.upload-btn:hover {
+  background-color: #ec4899;
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+}
+
+/* Secondary (Clear) Button */
+.clear-btn {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.clear-btn:hover {
+  background-color: #e5e7eb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .username {
+    font-size: 2rem;
+  }
+
+  .banner-content {
+    padding: 1.75rem;
+  }
+
+  .search-box {
+    max-width: 90%;
+  }
+}
+
+/* Overlay */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+/* Popup content */
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  animation: slideIn 0.3s ease-in-out;
+  position: relative;
+}
+
+/* Input field */
+.popup-content input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Buttons */
+.popup-content button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.popup-content button:hover {
+  opacity: 0.85;
+}
+
+.popup-content .search-btn {
+  background-color: #22c55e; /* green */
+  color: #fff;
+}
+
+.popup-content .close-btn {
+  background-color: #6b7280; /* gray */
+  color: #fff;
+}
+
+/* Response container */
+.response-container {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.response-container img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
